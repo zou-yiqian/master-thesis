@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vxml version="2.1" xmlns="http://www.w3.org/2001/vxml"
+      xmlns:voxeo="http://community.voxeo.com/xmlns/vxml">
+
+<!-- record the dialogue -->
+  <voxeo:recordcall value="100" info="evaluating"/>
+
+<!-- prompt the user what to do -->
+  <form id="welcome">
+    <block>
+      <prompt>
+        Hi, thank you for calling! All calls into this system are recorded for my thesis. 
+        You will evaluate two dialogues and see how the bot responds to you.
+        After that, you will be asked to give some comments. 
+        Now let's start the first scenario.
+      </prompt>
+      <goto next="#drink"/>
+    </block>
+  </form>
+
+<!-- Favorate drink scenario -->
+  <form id="drink">
+    <field name="cola_brand">
+      <prompt> Which brand of coke do you like best? Pepsi or Coca cola?</prompt>
+      <grammar type="application/srgs+xml" version="1.0" root="brand">
+        <rule id="brand">
+         <one-of>
+	   <item>Pepsi</item>
+	   <item>Coca cola</item>
+	  </one-of>
+	 </rule>
+	</grammar>
+ 
+ <!-- if mo match with active grammar list then user prompt again. -->
+      <nomatch>
+        Sorry? Pepsi or Coca cola?
+        <reprompt/>
+      </nomatch>
+  
+  <!-- if no input in provided -->
+      <noinput>
+        Did you say anything? I counldn't hear you.
+        <reprompt/>
+      </noinput>
+    </field>
+
+    <field name="color">
+      <prompt>What is the main color of the logo of <value expr="cola_brand"/>?
+      <grammar type="application/srgs+xml" version="1.0" root="color">
+        <rule id="color">
+   	  <one-of>
+ 	    <item>red</item>
+	    <item>blue</item>
+	    <item>white</item>
+	  </one-of>
+         </rule>
+      </grammar>
+
+      <nomatch>
+        Sorry, what did you say?
+        <reprompt/>
+      </nomatch>
+
+      <noinput>
+        Did you say anything?
+        <reprompt/>
+      </noinput>
+    </field>
+
+    <field name="wrong answer1">
+      <prompt>Do you like this green logo?</prompt>
+      <goto next="#date"/>
+    </field>
+  </form>
+
+ <!-- date scenario-->
+  <form id="date">
+    <grammar src="country+timezone.grxml" type="application/srgs+xml"/>
+    <field name="day">
+      <prompt>
+        <break time="2000"/>
+        Hi. What day of the week is today?
+      </prompt>
+      
+      <option>Monday</option>
+      <option>Tuesday</option>
+      <option>Wednesday</option>
+      <option>Thursday</option>
+      <option>Friday</option>
+      <option>Saturday</option>
+      <option>Sunday</option>
+      
+      <nomatch>
+        Sorry, what did you say?
+        <reprompt/>
+      </nomatch>
+      
+      <noinput>
+        Did you say anything? I couldn't hear you.
+        <reprompt/>
+      </noinput>
+    </field>
+
+    <field name="m/a">
+      <prompt>
+        Aha,<value expr="day">. Is it morning or afternoon?
+      </prompt>
+      
+      <option>morning</option>
+      <option>afternoon</option>
+      
+      <nomatch>
+        Sorry, what did you say?
+        </repormpt>
+      </nomatch>
+     
+      <noinput>
+        Did you say anything? I couldn't hear you.
+        </reprompt>
+      </noinput>
+      
+      <filled>
+        <if cond="m/a=='morning'">
+           <prompt>
+              I see, afternoon. What time is it?
+           </prompt>
+         <else />
+           <prompt>
+             I see, morning. What time is it?
+           </prompt>
+         </if>
+       </filled>
+     </field>
+  </form>
+</vxml> 
