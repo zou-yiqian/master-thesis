@@ -1,0 +1,34 @@
+S: Hi, thank you for calling! All calls into this system are recorded just for my thesis.
+    Next, you will evaluate two dialogues and see how the bot responds to you.
+    After that, you will be asked to give some comments.
+    Which dialogue do you like to start first? The first one or the second one?
+U: The first one.
+S: OK, let's start the first one. 
+    Which brand of coke do you like best? Pepsi or Coca cola?
+U: Coca cola.
+S: What's the main color of Coca cola?
+U: Red (If user says other color, system will response with red.) 
+S: How do you like the white logo?
+U: ...
+S: Thanks. Please rate this dialogue.
+    I will give you five statements. Please rate them from 1 to 5. The higher the score, the more you agree with this statement.
+    One. The system is pleasant.
+U: 3
+S: Two. The interaction with the system is boring.
+U: 5
+S: Three. The system is flexible.
+U: 4
+S: Four. A high level of concentration is required when using the system.
+U: 2
+S: Five. The interaction with the system is natural.
+U: 3
+S: Thanks for rating. Let's start next dialogue.
+    Hi, what day of the week is today?
+U: Wednesday.
+S: Aha, Wednesday. Is it morning or afternoon?
+U: morning.
+S: I see, in the afternoon. What time is it?
+U: ...
+S: Thanks. Please rate this dialogue.
+(The same rate process as above.)
+S:Thanks for rating. Bye. 
