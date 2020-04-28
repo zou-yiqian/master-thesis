@@ -6,28 +6,51 @@
 
 <!-- prompt the user what to do -->
  <form id="welcome">
+  <property name="bargein" value="false"/>
   <block>
    <break time="2000" />
    <prompt>
     Hi, thank you for calling! All calls into this system are recorded just for my thesis.
     Next, you will evaluate two dialogues and see how the bot responds to you.
     After that, you will be asked to give some comments.
-    Now, let's start the first scenario.
    </prompt>
-   <goto next="#drinkbrand"/>
   </block>
+
+  <field name="choose">
+   <prompt> Which dialogue do you like to start first? 1 or 2? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="id">
+    <rule id="id" scope="public">
+     <one-of>
+      <item> 1 <tag> out.id="1"; </tag> </item>
+      <item> 2 <tag> out.id="2"; </tag> </item>
+     </one-of>
+    </rule>
+   </grammar>
+
+   <filled>
+    <if cond="id=='1'">
+     <voxeo:recordcall value="100" info="1" />
+     <goto next="#drinkbrand"/>
+    <else />
+     <voxeo:recordcall value="100" info="2" />
+     <goto next="#drinkbrand2"/>
+    </if>
+   </filled>
+  </field>
  </form>
 
 <!-- Favorate drink scenario 1 -->
  <form id="drinkbrand">
+  <property name="bargein" value="false"/>
+
   <field name="brandField">
    <break time="2000" />
    <prompt> Which brand of coke do you like best? Pepsi or Coca cola? </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="brand">
     <rule id="brand" scope="public">
      <one-of>
-      <item> Pepsi </item>
-      <item> Coca cola </item>
+      <item> Pepsi <tag> out.brand="pepsi"; </tag> </item>
+      <item> Coca cola <tag> out.brand="coca cola"; </tag> </item>
      </one-of>
     </rule>
    </grammar>
@@ -38,42 +61,161 @@
    <grammar mode="voice" type="application/srgs+xml" root="color">
     <rule id="color" scope="public">
      <one-of>
-      <item> Red </item>
-      <item> Blue </item>
-      <item> White </item>
+      <item> Red <tag> out.color="red"; </tag> </item>
+      <item> Blue <tag> out.color="blue"; </tag> </item>
+      <item> White <tag> out.color="white"; </tag> </item>
+      <item> Black <tag> out.color="black"; </tag> </item>
+      <item> Green <tag> out.color="green"; </tag> </item>
+     </one-of>
+    </rule>
+   </grammar>
+
+   <filled>
+    <if cond="color=='red'">
+     <voxeo:recordcall value="100" info="1" />
+     <goto next="#drinkwrong1"/>
+    <else />
+     <voxeo:recordcall value="100" info="2" />
+     <goto next="#drinkwrong2"/>
+    </if>
+   </filled>
+  </field>
+
+ </form>
+ 
+ <form id="drinkwrong1">
+  <property name="bargein" value="false"/>
+
+  <record name="wrong" beep="false" maxtime="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
+   <prompt timeout="2s" bargein="false"> How do you like the white logo?</prompt>
+   <catch event="connection.disconnect.hangup">
+    <submit next="./voicemail_server.asp"/>
+   </catch>
+  </record>
+
+  <block>
+   <prompt>Thanks. Please rate this dialogue.</prompt>
+   <goto next="#drinkrate1" />
+  </block>
+ </form>
+
+ <form id="drinkwrong2">
+  <property name="bargein" value="false"/>
+
+  <record name="wrong" beep="false" maxtime="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
+   <prompt timeout="2s" bargein="false"> How do you like the red logo?</prompt>
+   <catch event="connection.disconnect.hangup">
+    <submit next="./voicemail_server.asp"/>
+   </catch>
+  </record>
+
+  <block>
+   <prompt>Thanks. Please rate this dialogue.</prompt>
+   <goto next="#drinkrate1" />
+  </block>
+ </form>
+
+<!-- drink scenario rating form 1 -->
+ <from id="drinkrate1">
+  <property name="bargein" value="false"/>
+
+  <block>
+   <prompt> I will give you five statements. Please rate them from 1 to 5. The higher the score, the more you agree with this statement.</prompt>
+  </block>
+
+  <field name="drinklikeability1">
+    <prompt> The system is pleasant. </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="drinklike1">
+    <rule id="drinklike1" scope="public">
+     <one-of>
+      <item> 1 </item>
+      <item> 2 </item>
+      <item> 3 </item>
+      <item> 4 </item>
+      <item> 5 </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="drinkannoyance1">
+    <prompt> The interaction with the system is boring.</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="drinkannoyance1">
+    <rule id="drinkannoyance1" scope="public">
+     <one-of>
+      <item> 1 </item>
+      <item> 2 </item>
+      <item> 3 </item>
+      <item> 4 </item>
+      <item> 5 </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="drinkannoy1">
+    <prompt> The system is flexible. </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="drinkannoy1">
+    <rule id="drinkannoy1" scope="public">
+     <one-of>
+      <item> 1 </item>
+      <item> 2 </item>
+      <item> 3 </item>
+      <item> 4 </item>
+      <item> 5 </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="drinkdemand1">
+    <prompt> A high level of concentration is required when using the system. </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="drinkdemand1">
+    <rule id="drinkdemand1" scope="public">
+     <one-of>
+      <item> 1 </item>
+      <item> 2 </item>
+      <item> 3 </item>
+      <item> 4 </item>
+      <item> 5 </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="drinkhabitabiliy1">
+    <prompt> The interaction with the system is natural. </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="drinkhabitabiliy1">
+    <rule id="drinkhabitabiliy1" scope="public">
+     <one-of>
+      <item> 1 </item>
+      <item> 2 </item>
+      <item> 3 </item>
+      <item> 4 </item>
+      <item> 5 </item>
      </one-of>
     </rule>
    </grammar>
   </field>
 
   <block>
-   <goto next="#wrong1" />
-  </block>
- </form>
- 
- <form id="wrong1">
-  <record name="wrong" beep="false" maxtime="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
-   <prompt timeout="2s"> How do you like the green logo?</prompt>
-   <catch event="connection.disconnect.hangup">
-    <submit next="./voicemail_server.asp"/>
-   </catch>
-  </record>
-  <block>
-   <prompt>Thanks. Let's start the date scenario.</prompt>
+   <prompt>Thanks for rating. Let's start next dialogue. </prompt>
    <goto next="#date" />
   </block>
  </form>
 
 <!-- Favorate drink scenario 2 -->
  <form id="drinkbrand2">
+  <property name="bargein" value="false"/>
+
   <field name="brandField2">
    <break time="2000" />
    <prompt> Which brand of coke do you like best? Pepsi or Coca cola? </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="brand2">
     <rule id="brand2" scope="public">
      <one-of>
-      <item> Pepsi </item>
-      <item> Coca cola </item>
+      <item> Pepsi <tag> out.brand2="pepsi"; </tag> </item>
+      <item> Coca cola <tag> out.brand2="coca cola"; </tag> </item>
      </one-of>
     </rule>
    </grammar>
@@ -84,29 +226,144 @@
    <grammar mode="voice" type="application/srgs+xml" root="color2">
     <rule id="color2" scope="public">
      <one-of>
-      <item> Red </item>
-      <item> Blue </item>
-      <item> White </item>
+      <item> Red <tag> out.color2="red"; </tag> </item>
+      <item> Blue <tag> out.color2="blue"; </tag> </item>
+      <item> White <tag> out.color2="white"; </tag> </item>
+      <item> Black <tag> out.color2="black"; </tag> </item>
+      <item> Green <tag> out.color2="green"; </tag> </item>
      </one-of>
     </rule>
    </grammar>
-  </field>
 
-  <block>
-   <goto next="#wrong2" />
-  </block>
+   <filled>
+    <if cond="color2=='red'">
+     <voxeo:recordcall value="100" info="1" />
+     <goto next="#drinkwrong3"/>
+    <else />
+     <voxeo:recordcall value="100" info="2" />
+     <goto next="#drinkwrong4"/>
+    </if>
+   </filled>
+  </field>
  </form>
  
- <form id="wrong2">
-  <record name="wrong2" beep="false" maxtime="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
-   <prompt timeout="2s">OK, green. How do you like the green logo?</prompt>
+ <form id="drinkwrong3">
+  <property name="bargein" value="false"/>
+
+  <record name="drinkwrong3" beep="false" maxtime="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
+   <prompt timeout="2s">OK, white. How do you like this logo's color?</prompt>
    <catch event="connection.disconnect.hangup">
     <submit next="./voicemail_server.asp"/>
    </catch>
   </record>
   
   <block>
-   <prompt>Thanks. Let's start the date scenario.</prompt>
+   <prompt>Thanks. Please rate this dialogue.</prompt>
+   <goto next="#drinkrate2" />
+  </block>
+ </form>
+
+ <form id="drinkwrong4">
+  <property name="bargein" value="false"/>
+
+  <record name="drinkwrong4" beep="false" maxtime="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
+   <prompt timeout="2s">OK, red. How do you like this logo's color?</prompt>
+   <catch event="connection.disconnect.hangup">
+    <submit next="./voicemail_server.asp"/>
+   </catch>
+  </record>
+  
+  <block>
+   <prompt>Thanks. Please rate this dialogue.</prompt>
+   <goto next="#drinkrate2" />
+  </block>
+ </form>
+
+<!-- drink rating form 2 -->
+ <from id="drinkrate2">
+  <property name="bargein" value="false"/>
+
+  <block>
+   <prompt> I will give you five statements. Please rate them from 1 to 5. The higher the score, the more you agree with this statement.</prompt>
+  </block>
+
+  <field name="drinklikeability2">
+    <prompt> The system is pleasant. </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="drinklike2">
+    <rule id="drinklike2" scope="public">
+     <one-of>
+      <item> 1 </item>
+      <item> 2 </item>
+      <item> 3 </item>
+      <item> 4 </item>
+      <item> 5 </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="drinkannoyance2">
+    <prompt> The interaction with the system is boring.</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="drinkannoyance2">
+    <rule id="drinkannoyance2" scope="public">
+     <one-of>
+      <item> 1 </item>
+      <item> 2 </item>
+      <item> 3 </item>
+      <item> 4 </item>
+      <item> 5 </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="drinkannoy2">
+    <prompt> The system is flexible. </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="drinkannoy2">
+    <rule id="drinkannoy2" scope="public">
+     <one-of>
+      <item> 1 </item>
+      <item> 2 </item>
+      <item> 3 </item>
+      <item> 4 </item>
+      <item> 5 </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="drinkdemand2">
+    <prompt> A high level of concentration is required when using the system. </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="drinkdemand2">
+    <rule id="drinkdemand2" scope="public">
+     <one-of>
+      <item> 1 </item>
+      <item> 2 </item>
+      <item> 3 </item>
+      <item> 4 </item>
+      <item> 5 </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="drinkhabitabiliy2">
+    <prompt> The interaction with the system is natural. </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="drinkhabitabiliy2">
+    <rule id="drinkhabitabiliy2" scope="public">
+     <one-of>
+      <item> 1 </item>
+      <item> 2 </item>
+      <item> 3 </item>
+      <item> 4 </item>
+      <item> 5 </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <block>
+   <prompt>Thanks for rating. Let's start next dialogue. </prompt>
    <goto next="#date2" />
   </block>
  </form>
@@ -115,17 +372,17 @@
  <form id="date">
   <field name="dayField">
    <break time="2000" />
-   <prompt> Hi, what day of the week is today? </prompt>
+   <prompt bargein="false"> Hi, what day of the week is today? </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="day">
     <rule id="day" scope="public">
      <one-of>
-      <item> Monday </item>
-      <item> Tuesday </item>
-      <item> Wednesday </item>
-      <item> Thursday </item>
-      <item> Friday </item>
-      <item> Saturday </item>
-      <item> Sunday </item>
+      <item> Monday <tag> out.day="monday"; </tag> </item>
+      <item> Tuesday <tag> out.day="tuesday"; </tag> </item>
+      <item> Wednesday <tag> out.day="wednesday"; </tag> </item>
+      <item> Thursday <tag> out.day="thursday"; </tag> </item>
+      <item> Friday <tag> out.day="friday"; </tag> </item>
+      <item> Saturday <tag> out.day="saturday"; </tag> </item>
+      <item> Sunday <tag> out.day="sunday"; </tag> </item>
      </one-of>
     </rule>
    </grammar>
@@ -133,34 +390,144 @@
 
   <field name="mornField">
    <break time="2000" />
-   <prompt> Aha, it is <value expr="dayField" />. Is it morning or afternoon?</prompt>
+   <prompt bargein="false"> Aha, it is <value expr="dayField" />. Is it morning or afternoon?</prompt>
    <grammar mode="voice" type="application/srgs+xml" root="morn">
     <rule id="morn" scope="public">
      <one-of>
-      <item> Morning </item>
-      <item> Afternoon</item>
+      <item> Morning <tag> out.morn="morning"; </tag> </item>
+      <item> Afternoon<tag> out.morn="afternoon"; </tag> </item>
      </one-of>
     </rule>
    </grammar>
+
+   <filled>
+    <if cond="morn=='morning'">
+     <voxeo:recordcall value="100" info="1" />
+     <goto next="#datewrong1"/>
+    <else />
+     <voxeo:recordcall value="100" info="2" />
+     <goto next="#datewrong2"/>
+    </if>
+   </filled>
   </field>
 
-  <block>
-   <goto next="#wrong3" />
-  </block>
  </form>
 
- <form id="wrong3">
-  <record name="wrong3" beep="false" maxitme="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
-   <prompt timeout="2s"> I see, in the night. What time is it?</prompt>
+ <form id="datewrong1">
+  <record name="datewrong1" beep="false" maxitme="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
+   <prompt timeout="2s" bargein="false"> I see, in the afternoon. What time is it?</prompt>
    <catch event="connection.disconnect.hangup">
     <submit next="./voicemail_server.asp" />
    </catch>
   </record>
 
   <block>
-   <prompt> 
-    Thanks for your help. There is the final step. Please go to the link and finish the questionaire.
-   </prompt>
+   <prompt>Thanks. Please rate this dialogue.</prompt>
+   <goto next="#daterate1" />
+  </block>
+ </form>
+
+ <form id="datewrong2">
+  <record name="datewrong2" beep="false" maxitme="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
+   <prompt timeout="2s" bargein="false"> I see, in the morning. What time is it?</prompt>
+   <catch event="connection.disconnect.hangup">
+    <submit next="./voicemail_server.asp" />
+   </catch>
+  </record>
+
+  <block>
+  <block>
+   <prompt>Thanks. Please rate this dialogue.</prompt>
+   <goto next="#daterate1" />
+  </block>
+  </block>
+ </form>
+
+<!-- date rating form 1 -->
+ <from id="daterate1">
+  <property name="bargein" value="false"/>
+
+  <block>
+   <prompt> Still five statements. Please rate them from 1 to 5. The higher the score, the more you agree with this statement.</prompt>
+  </block>
+
+  <field name="datelikeability1">
+    <prompt> The system is pleasant. </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="datelike1">
+    <rule id="datelike1" scope="public">
+     <one-of>
+      <item> 1 </item>
+      <item> 2 </item>
+      <item> 3 </item>
+      <item> 4 </item>
+      <item> 5 </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="dateannoyance1">
+    <prompt> The interaction with the system is boring.</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="dateannoyance1">
+    <rule id="dateannoyance1" scope="public">
+     <one-of>
+      <item> 1 </item>
+      <item> 2 </item>
+      <item> 3 </item>
+      <item> 4 </item>
+      <item> 5 </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="dateannoy1">
+    <prompt> The system is flexible. </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="dateannoy1">
+    <rule id="dateannoy1" scope="public">
+     <one-of>
+      <item> 1 </item>
+      <item> 2 </item>
+      <item> 3 </item>
+      <item> 4 </item>
+      <item> 5 </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="datedemand1">
+    <prompt> A high level of concentration is required when using the system. </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="datedemand1">
+    <rule id="datedemand1" scope="public">
+     <one-of>
+      <item> 1 </item>
+      <item> 2 </item>
+      <item> 3 </item>
+      <item> 4 </item>
+      <item> 5 </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="datehabitabiliy1">
+    <prompt> The interaction with the system is natural. </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="datehabitabiliy1">
+    <rule id="datehabitabiliy1" scope="public">
+     <one-of>
+      <item> 1 </item>
+      <item> 2 </item>
+      <item> 3 </item>
+      <item> 4 </item>
+      <item> 5 </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <block>
+   <prompt>Thanks for rating. Bye.</prompt>
   </block>
  </form>
 
@@ -168,17 +535,17 @@
  <form id="date2">
   <field name="dayField2">
    <break time="2000" />
-   <prompt> Hi, what day of the week is today? </prompt>
+   <prompt bargein="false"> Hi, what day of the week is today? </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="day2">
     <rule id="day2" scope="public">
      <one-of>
-      <item> Monday </item>
-      <item> Tuesday </item>
-      <item> Wednesday </item>
-      <item> Thursday </item>
-      <item> Friday </item>
-      <item> Saturday </item>
-      <item> Sunday </item>
+      <item> Monday <tag> out.day2="monday"; </tag> </item>
+      <item> Tuesday <tag> out.day2="tuesday"; </tag> </item>
+      <item> Wednesday <tag> out.day2="wednesday"; </tag> </item>
+      <item> Thursday <tag> out.day2="thursday"; </tag> </item>
+      <item> Friday <tag> out.day2="friday"; </tag> </item>
+      <item> Saturday <tag> out.day2="saturday"; </tag> </item>
+      <item> Sunday <tag> out.day2="sunday"; </tag> </item>
      </one-of>
     </rule>
    </grammar>
@@ -186,34 +553,142 @@
 
   <field name="mornField2">
    <break time="2000" />
-   <prompt> Is it <value expr="dayField2" /> morning or afternoon?</prompt>
+   <prompt bargein="false"> Is it <value expr="dayField2" /> morning or afternoon?</prompt>
    <grammar mode="voice" type="application/srgs+xml" root="morn2">
     <rule id="morn2" scope="public">
      <one-of>
-      <item> Morning </item>
-      <item> Afternoon</item>
+      <item> Morning <tag> out.morn2="morning"; </tag> </item>
+      <item> Afternoon<tag> out.morn2="afternoon"; </tag> </item>
      </one-of>
     </rule>
    </grammar>
-  </field>
 
-  <block>
-   <goto next="#wrong4" />
-  </block>
+   <filled>
+    <if cond="morn2=='morning'">
+     <voxeo:recordcall value="100" info="1" />
+     <goto next="#datewrong3"/>
+    <else />
+     <voxeo:recordcall value="100" info="2" />
+     <goto next="#datewrong4"/>
+    </if>
+   </filled>
+  </field>
  </form>
 
- <form id="wrong4">
-  <record name="wrong4" beep="false" maxitme="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
-   <prompt timeout="2s"> What time in the night is it?</prompt>
+ <form id="datewrong3">
+  <record name="datewrong3" beep="false" maxitme="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
+   <prompt timeout="2s" bargein="false"> What time in the afternoon is it?</prompt>
    <catch event="connection.disconnect.hangup">
     <submit next="./voicemail_server.asp" />
    </catch>
   </record>
 
   <block>
-   <prompt> 
-    Thanks for your help. There is the final step. Please go to the link and finish the questionaire.
-   </prompt>
+   <prompt>Thanks. Please rate this dialogue.</prompt>
+   <goto next="#daterate2" />
   </block>
  </form>
+
+ <form id="datewrong4">
+  <record name="datewrong4" beep="false" maxitme="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
+   <prompt timeout="2s" bargein="false"> What time in the morning is it?</prompt>
+   <catch event="connection.disconnect.hangup">
+    <submit next="./voicemail_server.asp" />
+   </catch>
+  </record>
+
+  <block>
+   <prompt>Thanks. Please rate this dialogue.</prompt>
+   <goto next="#daterate2" />
+  </block>
+ </form>
+
+<!-- date scenario rating form 2 -->
+ <form id="daterate2">
+  <property name="bargein" value="false"/>
+
+  <block>
+   <prompt> Still five statements. Please rate them from 1 to 5. The higher the score, the more you agree with this statement.</prompt>
+  </block>
+
+  <field name="datelike2">
+    <prompt> The system is pleasant. </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="datelike2">
+    <rule id="datelike2" scope="public">
+     <one-of>
+      <item> 1 </item>
+      <item> 2 </item>
+      <item> 3 </item>
+      <item> 4 </item>
+      <item> 5 </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="dateannoyance2">
+    <prompt> The interaction with the system is boring.</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="dateannoyance2">
+    <rule id="dateannoyance2" scope="public">
+     <one-of>
+      <item> 1 </item>
+      <item> 2 </item>
+      <item> 3 </item>
+      <item> 4 </item>
+      <item> 5 </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="dateannoy2">
+    <prompt> The system is flexible. </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="dateannoy2">
+    <rule id="dateannoy2" scope="public">
+     <one-of>
+      <item> 1 </item>
+      <item> 2 </item>
+      <item> 3 </item>
+      <item> 4 </item>
+      <item> 5 </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="datedemand2">
+    <prompt> A high level of concentration is required when using the system. </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="datedemand2">
+    <rule id="datedemand2" scope="public">
+     <one-of>
+      <item> 1 </item>
+      <item> 2 </item>
+      <item> 3 </item>
+      <item> 4 </item>
+      <item> 5 </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="datehabitabiliy2">
+    <prompt> The interaction with the system is natural. </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="datehabitabiliy2">
+    <rule id="datehabitabiliy2" scope="public">
+     <one-of>
+      <item> 1 </item>
+      <item> 2 </item>
+      <item> 3 </item>
+      <item> 4 </item>
+      <item> 5 </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <block>
+   <prompt>Thanks for rating. Bye. </prompt>
+  </block>
+ </form>
+
 </vxml>
