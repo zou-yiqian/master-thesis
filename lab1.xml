@@ -17,12 +17,14 @@
   </block>
 
   <field name="choose">
-   <prompt> Which dialogue do you like to start first? 1 or 2? </prompt>
+   <prompt> Which dialogue do you like to start first? The first one or the second one? </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="id">
     <rule id="id" scope="public">
      <one-of>
-      <item> 1 <tag> out.id="1"; </tag> </item>
-      <item> 2 <tag> out.id="2"; </tag> </item>
+      <item> first <tag> out.id="1"; </tag> </item>
+      <item> second <tag> out.id="2"; </tag> </item>
+      <item> one <tag> out.id="1"; </tag> </item>
+      <item> two <tag> out.id="2"; </tag> </item>
      </one-of>
     </rule>
    </grammar>
@@ -45,7 +47,7 @@
 
   <field name="brandField">
    <break time="2000" />
-   <prompt> Which brand of coke do you like best? Pepsi or Coca cola? </prompt>
+   <prompt> OK, let's start the first one. Which brand of coke do you like best? Pepsi or Coca cola? </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="brand">
     <rule id="brand" scope="public">
      <one-of>
@@ -124,7 +126,7 @@
   </block>
 
   <field name="drinklikeability1">
-    <prompt> The system is pleasant. </prompt>
+    <prompt>One. The system is pleasant. </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="drinklike1">
     <rule id="drinklike1" scope="public">
      <one-of>
@@ -139,7 +141,7 @@
   </field>
 
   <field name="drinkannoyance1">
-    <prompt> The interaction with the system is boring.</prompt>
+    <prompt> Two. The interaction with the system is boring.</prompt>
    <grammar mode="voice" type="application/srgs+xml" root="drinkannoyance1">
     <rule id="drinkannoyance1" scope="public">
      <one-of>
@@ -154,7 +156,7 @@
   </field>
 
   <field name="drinkannoy1">
-    <prompt> The system is flexible. </prompt>
+    <prompt> Three. The system is flexible. </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="drinkannoy1">
     <rule id="drinkannoy1" scope="public">
      <one-of>
@@ -169,7 +171,7 @@
   </field>
 
   <field name="drinkdemand1">
-    <prompt> A high level of concentration is required when using the system. </prompt>
+    <prompt> Four. A high level of concentration is required when using the system. </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="drinkdemand1">
     <rule id="drinkdemand1" scope="public">
      <one-of>
@@ -184,7 +186,7 @@
   </field>
 
   <field name="drinkhabitabiliy1">
-    <prompt> The interaction with the system is natural. </prompt>
+    <prompt> Five. The interaction with the system is natural. </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="drinkhabitabiliy1">
     <rule id="drinkhabitabiliy1" scope="public">
      <one-of>
@@ -210,7 +212,7 @@
 
   <field name="brandField2">
    <break time="2000" />
-   <prompt> Which brand of coke do you like best? Pepsi or Coca cola? </prompt>
+   <prompt> OK, let's start the second one. Which brand of coke do you like best? Pepsi or Coca cola? </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="brand2">
     <rule id="brand2" scope="public">
      <one-of>
@@ -288,7 +290,7 @@
   </block>
 
   <field name="drinklikeability2">
-    <prompt> The system is pleasant. </prompt>
+    <prompt> One. The system is pleasant. </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="drinklike2">
     <rule id="drinklike2" scope="public">
      <one-of>
@@ -303,7 +305,7 @@
   </field>
 
   <field name="drinkannoyance2">
-    <prompt> The interaction with the system is boring.</prompt>
+    <prompt> Two. The interaction with the system is boring.</prompt>
    <grammar mode="voice" type="application/srgs+xml" root="drinkannoyance2">
     <rule id="drinkannoyance2" scope="public">
      <one-of>
@@ -318,7 +320,7 @@
   </field>
 
   <field name="drinkannoy2">
-    <prompt> The system is flexible. </prompt>
+    <prompt>Three. The system is flexible. </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="drinkannoy2">
     <rule id="drinkannoy2" scope="public">
      <one-of>
@@ -333,7 +335,7 @@
   </field>
 
   <field name="drinkdemand2">
-    <prompt> A high level of concentration is required when using the system. </prompt>
+    <prompt> Four. A high level of concentration is required when using the system. </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="drinkdemand2">
     <rule id="drinkdemand2" scope="public">
      <one-of>
@@ -348,7 +350,7 @@
   </field>
 
   <field name="drinkhabitabiliy2">
-    <prompt> The interaction with the system is natural. </prompt>
+    <prompt> Five. The interaction with the system is natural. </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="drinkhabitabiliy2">
     <rule id="drinkhabitabiliy2" scope="public">
      <one-of>
@@ -452,7 +454,7 @@
   </block>
 
   <field name="datelikeability1">
-    <prompt> The system is pleasant. </prompt>
+    <prompt> One. The system is pleasant. </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="datelike1">
     <rule id="datelike1" scope="public">
      <one-of>
@@ -467,7 +469,7 @@
   </field>
 
   <field name="dateannoyance1">
-    <prompt> The interaction with the system is boring.</prompt>
+    <prompt> Two. The interaction with the system is boring.</prompt>
    <grammar mode="voice" type="application/srgs+xml" root="dateannoyance1">
     <rule id="dateannoyance1" scope="public">
      <one-of>
@@ -482,7 +484,7 @@
   </field>
 
   <field name="dateannoy1">
-    <prompt> The system is flexible. </prompt>
+    <prompt> Three. The system is flexible. </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="dateannoy1">
     <rule id="dateannoy1" scope="public">
      <one-of>
@@ -497,7 +499,7 @@
   </field>
 
   <field name="datedemand1">
-    <prompt> A high level of concentration is required when using the system. </prompt>
+    <prompt> Four. A high level of concentration is required when using the system. </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="datedemand1">
     <rule id="datedemand1" scope="public">
      <one-of>
@@ -512,7 +514,7 @@
   </field>
 
   <field name="datehabitabiliy1">
-    <prompt> The interaction with the system is natural. </prompt>
+    <prompt> Five. The interaction with the system is natural. </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="datehabitabiliy1">
     <rule id="datehabitabiliy1" scope="public">
      <one-of>
@@ -612,7 +614,7 @@
   </block>
 
   <field name="datelike2">
-    <prompt> The system is pleasant. </prompt>
+    <prompt> One. The system is pleasant. </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="datelike2">
     <rule id="datelike2" scope="public">
      <one-of>
@@ -627,7 +629,7 @@
   </field>
 
   <field name="dateannoyance2">
-    <prompt> The interaction with the system is boring.</prompt>
+    <prompt> Two. The interaction with the system is boring.</prompt>
    <grammar mode="voice" type="application/srgs+xml" root="dateannoyance2">
     <rule id="dateannoyance2" scope="public">
      <one-of>
@@ -642,7 +644,7 @@
   </field>
 
   <field name="dateannoy2">
-    <prompt> The system is flexible. </prompt>
+    <prompt> Three. The system is flexible. </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="dateannoy2">
     <rule id="dateannoy2" scope="public">
      <one-of>
@@ -657,7 +659,7 @@
   </field>
 
   <field name="datedemand2">
-    <prompt> A high level of concentration is required when using the system. </prompt>
+    <prompt> Four. A high level of concentration is required when using the system. </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="datedemand2">
     <rule id="datedemand2" scope="public">
      <one-of>
@@ -672,7 +674,7 @@
   </field>
 
   <field name="datehabitabiliy2">
-    <prompt> The interaction with the system is natural. </prompt>
+    <prompt> Five. The interaction with the system is natural. </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="datehabitabiliy2">
     <rule id="datehabitabiliy2" scope="public">
      <one-of>
