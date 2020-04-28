@@ -1,135 +1,219 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<vxml version="2.1" xmlns="http://www.w3.org/2001/vxml"
-      xmlns:voxeo="http://community.voxeo.com/xmlns/vxml">
-
-<!-- record the dialogue -->
-  <voxeo:recordcall value="100" info="evaluating"/>
+<?xml version="1.0"?>
+<vxml version="2.0" xmlns="http://www.w3.org/2001/vxml"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.w3.org/2001/vxml
+         http://www.w3.org/TR/voicexml20/vxml.xsd">
 
 <!-- prompt the user what to do -->
-  <form id="welcome">
-    <block>
-      <prompt>
-        Hi, thank you for calling! All calls into this system are recorded for my thesis. 
-        You will evaluate two dialogues and see how the bot responds to you.
-        After that, you will be asked to give some comments. 
-        Now let's start the first scenario.
-      </prompt>
-      <goto next="#drink"/>
-    </block>
-  </form>
+ <form id="welcome">
+  <block>
+   <break time="2000" />
+   <prompt>
+    Hi, thank you for calling! All calls into this system are recorded just for my thesis.
+    Next, you will evaluate two dialogues and see how the bot responds to you.
+    After that, you will be asked to give some comments.
+    Now, let's start the first scenario.
+   </prompt>
+   <goto next="#drinkbrand"/>
+  </block>
+ </form>
 
-<!-- Favorate drink scenario -->
-  <form id="drink">
-    <field name="cola_brand">
-      <prompt> Which brand of coke do you like best? Pepsi or Coca cola?</prompt>
-      <grammar type="application/srgs+xml" version="1.0" root="brand">
-        <rule id="brand">
-         <one-of>
-	   <item>Pepsi</item>
-	   <item>Coca cola</item>
-	  </one-of>
-	 </rule>
-	</grammar>
+<!-- Favorate drink scenario 1 -->
+ <form id="drinkbrand">
+  <field name="brandField">
+   <break time="2000" />
+   <prompt> Which brand of coke do you like best? Pepsi or Coca cola? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="brand">
+    <rule id="brand" scope="public">
+     <one-of>
+      <item> Pepsi </item>
+      <item> Coca cola </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="colorField">
+   <prompt>What's the main color of <value expr="brandField" /> </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="color">
+    <rule id="color" scope="public">
+     <one-of>
+      <item> Red </item>
+      <item> Blue </item>
+      <item> White </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <block>
+   <goto next="#wrong1" />
+  </block>
+ </form>
  
- <!-- if mo match with active grammar list then user prompt again. -->
-      <nomatch>
-        Sorry? Pepsi or Coca cola?
-        <reprompt/>
-      </nomatch>
+ <form id="wrong1">
+  <record name="wrong" beep="false" maxtime="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
+   <prompt timeout="2s"> How do you like the green logo?</prompt>
+   <catch event="connection.disconnect.hangup">
+    <submit next="./voicemail_server.asp"/>
+   </catch>
+  </record>
+  <block>
+   <prompt>Thanks. Let's start the date scenario.</prompt>
+   <goto next="#date" />
+  </block>
+ </form>
+
+<!-- Favorate drink scenario 2 -->
+ <form id="drinkbrand2">
+  <field name="brandField2">
+   <break time="2000" />
+   <prompt> Which brand of coke do you like best? Pepsi or Coca cola? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="brand2">
+    <rule id="brand2" scope="public">
+     <one-of>
+      <item> Pepsi </item>
+      <item> Coca cola </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="colorField2">
+   <prompt>Hmm, <value expr="brandField2" />. What's the main color of its logo? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="color2">
+    <rule id="color2" scope="public">
+     <one-of>
+      <item> Red </item>
+      <item> Blue </item>
+      <item> White </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <block>
+   <goto next="#wrong2" />
+  </block>
+ </form>
+ 
+ <form id="wrong2">
+  <record name="wrong2" beep="false" maxtime="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
+   <prompt timeout="2s">OK, green. How do you like the green logo?</prompt>
+   <catch event="connection.disconnect.hangup">
+    <submit next="./voicemail_server.asp"/>
+   </catch>
+  </record>
   
-  <!-- if no input in provided -->
-      <noinput>
-        Did you say anything? I counldn't hear you.
-        <reprompt/>
-      </noinput>
-    </field>
+  <block>
+   <prompt>Thanks. Let's start the date scenario.</prompt>
+   <goto next="#date2" />
+  </block>
+ </form>
 
-    <field name="color">
-      <prompt>What is the main color of the logo of <value expr="cola_brand"/>?
-      <grammar type="application/srgs+xml" version="1.0" root="color">
-        <rule id="color">
-   	  <one-of>
- 	    <item>red</item>
-	    <item>blue</item>
-	    <item>white</item>
-	  </one-of>
-         </rule>
-      </grammar>
+<!-- Date scenario 1 -->
+ <form id="date">
+  <field name="dayField">
+   <break time="2000" />
+   <prompt> Hi, what day of the week is today? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="day">
+    <rule id="day" scope="public">
+     <one-of>
+      <item> Monday </item>
+      <item> Tuesday </item>
+      <item> Wednesday </item>
+      <item> Thursday </item>
+      <item> Friday </item>
+      <item> Saturday </item>
+      <item> Sunday </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
 
-      <nomatch>
-        Sorry, what did you say?
-        <reprompt/>
-      </nomatch>
+  <field name="mornField">
+   <break time="2000" />
+   <prompt> Aha, it is <value expr="dayField" />. Is it morning or afternoon?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="morn">
+    <rule id="morn" scope="public">
+     <one-of>
+      <item> Morning </item>
+      <item> Afternoon</item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
 
-      <noinput>
-        Did you say anything?
-        <reprompt/>
-      </noinput>
-    </field>
+  <block>
+   <goto next="#wrong3" />
+  </block>
+ </form>
 
-    <field name="wrong answer1">
-      <prompt>Do you like this green logo?</prompt>
-      <goto next="#date"/>
-    </field>
-  </form>
+ <form id="wrong3">
+  <record name="wrong3" beep="false" maxitme="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
+   <prompt timeout="2s"> I see, in the night. What time is it?</prompt>
+   <catch event="connection.disconnect.hangup">
+    <submit next="./voicemail_server.asp" />
+   </catch>
+  </record>
 
- <!-- date scenario-->
-  <form id="date">
-    <grammar src="country+timezone.grxml" type="application/srgs+xml"/>
-    <field name="day">
-      <prompt>
-        <break time="2000"/>
-        Hi. What day of the week is today?
-      </prompt>
-      
-      <option>Monday</option>
-      <option>Tuesday</option>
-      <option>Wednesday</option>
-      <option>Thursday</option>
-      <option>Friday</option>
-      <option>Saturday</option>
-      <option>Sunday</option>
-      
-      <nomatch>
-        Sorry, what did you say?
-        <reprompt/>
-      </nomatch>
-      
-      <noinput>
-        Did you say anything? I couldn't hear you.
-        <reprompt/>
-      </noinput>
-    </field>
+  <block>
+   <prompt> 
+    Thanks for your help. There is the final step. Please go to the link and finish the questionaire.
+   </prompt>
+  </block>
+ </form>
 
-    <field name="m/a">
-      <prompt>
-        Aha,<value expr="day">. Is it morning or afternoon?
-      </prompt>
-      
-      <option>morning</option>
-      <option>afternoon</option>
-      
-      <nomatch>
-        Sorry, what did you say?
-        </repormpt>
-      </nomatch>
-     
-      <noinput>
-        Did you say anything? I couldn't hear you.
-        </reprompt>
-      </noinput>
-      
-      <filled>
-        <if cond="m/a=='morning'">
-           <prompt>
-              I see, afternoon. What time is it?
-           </prompt>
-         <else />
-           <prompt>
-             I see, morning. What time is it?
-           </prompt>
-         </if>
-       </filled>
-     </field>
-  </form>
-</vxml> 
+<!-- Date scenario 2 -->
+ <form id="date2">
+  <field name="dayField2">
+   <break time="2000" />
+   <prompt> Hi, what day of the week is today? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="day2">
+    <rule id="day2" scope="public">
+     <one-of>
+      <item> Monday </item>
+      <item> Tuesday </item>
+      <item> Wednesday </item>
+      <item> Thursday </item>
+      <item> Friday </item>
+      <item> Saturday </item>
+      <item> Sunday </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="mornField2">
+   <break time="2000" />
+   <prompt> Is it <value expr="dayField2" /> morning or afternoon?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="morn2">
+    <rule id="morn2" scope="public">
+     <one-of>
+      <item> Morning </item>
+      <item> Afternoon</item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <block>
+   <goto next="#wrong4" />
+  </block>
+ </form>
+
+ <form id="wrong4">
+  <record name="wrong4" beep="false" maxitme="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
+   <prompt timeout="2s"> What time in the night is it?</prompt>
+   <catch event="connection.disconnect.hangup">
+    <submit next="./voicemail_server.asp" />
+   </catch>
+  </record>
+
+  <block>
+   <prompt> 
+    Thanks for your help. There is the final step. Please go to the link and finish the questionaire.
+   </prompt>
+  </block>
+ </form>
+</vxml>
