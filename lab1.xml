@@ -3,694 +3,1109 @@
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.w3.org/2001/vxml
          http://www.w3.org/TR/voicexml20/vxml.xsd">
+ <var name="date1"/>
+ <var name="morn1"/>
+ <var name="date2"/>
+ <var name="morn2"/>
 
 <!-- prompt the user what to do -->
  <form id="welcome">
-  <property name="bargein" value="false"/>
   <block>
-   <break time="2000" />
+   <break time="1s" />
    <prompt>
     Hi, thank you for calling! All calls into this system are recorded just for my thesis.
     Next, you will evaluate two dialogues and see how the bot responds to you.
-    After that, you will be asked to give some comments.
+    After that, you will be asked to rate them separately.
    </prompt>
+   <goto next="#birthday1"/>
   </block>
+ </form>
 
-  <field name="choose">
-   <prompt> Which dialogue do you like to start first? The first one or the second one? </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="id">
-    <rule id="id" scope="public">
+<!-- Birthday inplicit + day explicit-->
+<!-- Birthday scenario -->
+ <form id="birthday1">
+  <field name="birthmonth1">
+   <prompt> OK, let's start the first one. Which month were you born? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="birthmonth1">
+    <rule id="birthmonth1" scope="public">
      <one-of>
-      <item> first <tag> out.id="1"; </tag> </item>
-      <item> second <tag> out.id="2"; </tag> </item>
-      <item> one <tag> out.id="1"; </tag> </item>
-      <item> two <tag> out.id="2"; </tag> </item>
+      <item> January </item>
+      <item> February </item>
+      <item> March </item>
+      <item> April </item>
+      <item> May </item>
+      <item> June </item>
+      <item> July </item>
+      <item> August </item>
+      <item> September </item>
+      <item> October </item>
+      <item> November </item>
+      <item> December </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="birthdate1">
+   <prompt>What day is your birthday in <value expr="birthmonth1" />?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="birthdate1" tag-format="semantic/1.0">
+    <rule id="birthdate1" scope="public">
+     <one-of>
+      <item> first <tag>date1="first"; </tag> </item>
+      <item> second <tag>date1="second"; </tag> </item>
+      <item> third <tag>date1="third"; </tag> </item>
+      <item> fourth <tag>date1="fourth"; </tag> </item>
+      <item> fifth <tag>date1="fifth"; </tag> </item>
+      <item> sixth <tag>date1="sixth"; </tag> </item>
+      <item> seventh <tag>date1="seventh"; </tag> </item>
+      <item> eighth <tag>date1="eighth"; </tag> </item>
+      <item> ninth <tag>date1="ninth"; </tag> </item>
+      <item> tenth <tag>date1="tenth"; </tag> </item>
+      <item> eleventh <tag>date1="eleventh"; </tag> </item>
+      <item> twlefth <tag>date1="twlefth"; </tag> </item>
+      <item> thirteenth <tag>date1="thirteenth"; </tag> </item>
+      <item> fourteenth <tag>date1="fourteenth"; </tag> </item>
+      <item> fifteenth <tag>date1="fifteenth"; </tag> </item>
+      <item> sixteenth <tag>date1="sixteenth"; </tag> </item>
+      <item> seventeenth <tag>date1="seventeenth"; </tag> </item>
+      <item> eighteenth <tag>date1="eighteenth"; </tag> </item>
+      <item> ninteenth <tag>date1="ninteenth"; </tag> </item>
+      <item> twentieth <tag>date1="twentieth"; </tag> </item>
+      <item> twenty-first <tag>date1="twenty-first"; </tag> </item>
+      <item> twenty-second <tag>date1="twenty-second"; </tag> </item>
+      <item> twenty-third <tag>date1="twenty-third"; </tag> </item>
+      <item> twenty-forth <tag>date1="twenty-forth"; </tag> </item>
+      <item> twenty-fifth <tag>date1="twenty-fifth"; </tag> </item>
+      <item> twenty-sixth <tag>date1="twenty-sixth"; </tag> </item>
+      <item> twenty-seventh <tag>date1="twenty-seventh"; </tag> </item>
+      <item> twenty-eighth <tag>date1="twenty-eighth"; </tag> </item>
+      <item> twenty-ninth <tag>date1="twenty-ninth"; </tag> </item>
+      <item> thirtieth <tag>date1="thirtieth"; </tag> </item>
+      <item> thirtieth-first <tag>date1="thirtieth-first"; </tag> </item>
      </one-of>
     </rule>
    </grammar>
 
    <filled>
-    <if cond="id=='1'">
-     <voxeo:recordcall value="100" info="1" />
-     <goto next="#drinkbrand"/>
+    <if cond="date1=='first'">
+     <goto next="#birthwrong1"/>
     <else />
-     <voxeo:recordcall value="100" info="2" />
-     <goto next="#drinkbrand2"/>
-    </if>
-   </filled>
-  </field>
- </form>
-
-<!-- Favorate drink scenario 1 -->
- <form id="drinkbrand">
-  <property name="bargein" value="false"/>
-
-  <field name="brandField">
-   <break time="2000" />
-   <prompt> OK, let's start the first one. Which brand of coke do you like best? Pepsi or Coca cola? </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="brand">
-    <rule id="brand" scope="public">
-     <one-of>
-      <item> Pepsi <tag> out.brand="pepsi"; </tag> </item>
-      <item> Coca cola <tag> out.brand="coca cola"; </tag> </item>
-     </one-of>
-    </rule>
-   </grammar>
-  </field>
-
-  <field name="colorField">
-   <prompt>What's the main color of <value expr="brandField" /> </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="color">
-    <rule id="color" scope="public">
-     <one-of>
-      <item> Red <tag> out.color="red"; </tag> </item>
-      <item> Blue <tag> out.color="blue"; </tag> </item>
-      <item> White <tag> out.color="white"; </tag> </item>
-      <item> Black <tag> out.color="black"; </tag> </item>
-      <item> Green <tag> out.color="green"; </tag> </item>
-     </one-of>
-    </rule>
-   </grammar>
-
-   <filled>
-    <if cond="color=='red'">
-     <voxeo:recordcall value="100" info="1" />
-     <goto next="#drinkwrong1"/>
-    <else />
-     <voxeo:recordcall value="100" info="2" />
-     <goto next="#drinkwrong2"/>
-    </if>
-   </filled>
-  </field>
-
- </form>
- 
- <form id="drinkwrong1">
-  <property name="bargein" value="false"/>
-
-  <record name="wrong" beep="false" maxtime="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
-   <prompt timeout="2s" bargein="false"> How do you like the white logo?</prompt>
-   <catch event="connection.disconnect.hangup">
-    <submit next="./voicemail_server.asp"/>
-   </catch>
-  </record>
-
-  <block>
-   <prompt>Thanks. Please rate this dialogue.</prompt>
-   <goto next="#drinkrate1" />
-  </block>
- </form>
-
- <form id="drinkwrong2">
-  <property name="bargein" value="false"/>
-
-  <record name="wrong" beep="false" maxtime="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
-   <prompt timeout="2s" bargein="false"> How do you like the red logo?</prompt>
-   <catch event="connection.disconnect.hangup">
-    <submit next="./voicemail_server.asp"/>
-   </catch>
-  </record>
-
-  <block>
-   <prompt>Thanks. Please rate this dialogue.</prompt>
-   <goto next="#drinkrate1" />
-  </block>
- </form>
-
-<!-- drink scenario rating form 1 -->
- <from id="drinkrate1">
-  <property name="bargein" value="false"/>
-
-  <block>
-   <prompt> I will give you five statements. Please rate them from 1 to 5. The higher the score, the more you agree with this statement.</prompt>
-  </block>
-
-  <field name="drinklikeability1">
-    <prompt>One. The system is pleasant. </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="drinklike1">
-    <rule id="drinklike1" scope="public">
-     <one-of>
-      <item> 1 </item>
-      <item> 2 </item>
-      <item> 3 </item>
-      <item> 4 </item>
-      <item> 5 </item>
-     </one-of>
-    </rule>
-   </grammar>
-  </field>
-
-  <field name="drinkannoyance1">
-    <prompt> Two. The interaction with the system is boring.</prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="drinkannoyance1">
-    <rule id="drinkannoyance1" scope="public">
-     <one-of>
-      <item> 1 </item>
-      <item> 2 </item>
-      <item> 3 </item>
-      <item> 4 </item>
-      <item> 5 </item>
-     </one-of>
-    </rule>
-   </grammar>
-  </field>
-
-  <field name="drinkannoy1">
-    <prompt> Three. The system is flexible. </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="drinkannoy1">
-    <rule id="drinkannoy1" scope="public">
-     <one-of>
-      <item> 1 </item>
-      <item> 2 </item>
-      <item> 3 </item>
-      <item> 4 </item>
-      <item> 5 </item>
-     </one-of>
-    </rule>
-   </grammar>
-  </field>
-
-  <field name="drinkdemand1">
-    <prompt> Four. A high level of concentration is required when using the system. </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="drinkdemand1">
-    <rule id="drinkdemand1" scope="public">
-     <one-of>
-      <item> 1 </item>
-      <item> 2 </item>
-      <item> 3 </item>
-      <item> 4 </item>
-      <item> 5 </item>
-     </one-of>
-    </rule>
-   </grammar>
-  </field>
-
-  <field name="drinkhabitabiliy1">
-    <prompt> Five. The interaction with the system is natural. </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="drinkhabitabiliy1">
-    <rule id="drinkhabitabiliy1" scope="public">
-     <one-of>
-      <item> 1 </item>
-      <item> 2 </item>
-      <item> 3 </item>
-      <item> 4 </item>
-      <item> 5 </item>
-     </one-of>
-    </rule>
-   </grammar>
-  </field>
-
-  <block>
-   <prompt>Thanks for rating. Let's start next dialogue. </prompt>
-   <goto next="#date" />
-  </block>
- </form>
-
-<!-- Favorate drink scenario 2 -->
- <form id="drinkbrand2">
-  <property name="bargein" value="false"/>
-
-  <field name="brandField2">
-   <break time="2000" />
-   <prompt> OK, let's start the second one. Which brand of coke do you like best? Pepsi or Coca cola? </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="brand2">
-    <rule id="brand2" scope="public">
-     <one-of>
-      <item> Pepsi <tag> out.brand2="pepsi"; </tag> </item>
-      <item> Coca cola <tag> out.brand2="coca cola"; </tag> </item>
-     </one-of>
-    </rule>
-   </grammar>
-  </field>
-
-  <field name="colorField2">
-   <prompt>Hmm, <value expr="brandField2" />. What's the main color of its logo? </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="color2">
-    <rule id="color2" scope="public">
-     <one-of>
-      <item> Red <tag> out.color2="red"; </tag> </item>
-      <item> Blue <tag> out.color2="blue"; </tag> </item>
-      <item> White <tag> out.color2="white"; </tag> </item>
-      <item> Black <tag> out.color2="black"; </tag> </item>
-      <item> Green <tag> out.color2="green"; </tag> </item>
-     </one-of>
-    </rule>
-   </grammar>
-
-   <filled>
-    <if cond="color2=='red'">
-     <voxeo:recordcall value="100" info="1" />
-     <goto next="#drinkwrong3"/>
-    <else />
-     <voxeo:recordcall value="100" info="2" />
-     <goto next="#drinkwrong4"/>
+     <goto next="#birthwrong2"/>
     </if>
    </filled>
   </field>
  </form>
  
- <form id="drinkwrong3">
-  <property name="bargein" value="false"/>
+ <form id="birthwrong1">
+  <field name="birthwrong1">
+   <prompt>When were you born on the second ?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="birthwrong1">
+    <rule id="birthwrong1" scope="public">
+     <one-of>
+      <item> 1 </item>
+     </one-of>
+    </rule>
+   </grammar>
+   <nomatch>
+    <goto next="#rate1"/>
+   </nomatch>
+  </field>
+ </form>
 
-  <record name="drinkwrong3" beep="false" maxtime="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
-   <prompt timeout="2s">OK, white. How do you like this logo's color?</prompt>
-   <catch event="connection.disconnect.hangup">
-    <submit next="./voicemail_server.asp"/>
-   </catch>
-  </record>
+ <form id="birthwrong2">
+  <field name="birthwrong2">
+   <prompt>When were you born on the first ?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="birthwrong2">
+    <rule id="birthwrong2" scope="public">
+     <one-of>
+      <item> 1 </item>
+     </one-of>
+    </rule>
+   </grammar>
+   <nomatch>
+    <goto next="#rate1"/>
+   </nomatch>
+  </field>
+ </form>
+
+ <form id="rate1">
+  <block>
+   <prompt> Thanks for testing the first dialogue. Next, I will give you two statements. Please rate them from 1 to 5.The higher the score, the more you agree with this statement.</prompt>
+  </block>
   
+  <field name="natural1">
+   <prompt> How natural is the system? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="natural1">
+    <rule id="natural1" scope="public">
+     <one-of>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="easy1">
+   <prompt> How easy is the system? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="easy1">
+    <rule id="easy1" scope="public">
+     <one-of>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
   <block>
-   <prompt>Thanks. Please rate this dialogue.</prompt>
-   <goto next="#drinkrate2" />
+   <prompt>Thanks for rating. Let's start next dialogue.</prompt>
+   <goto next="#date1"/>
   </block>
  </form>
 
- <form id="drinkwrong4">
-  <property name="bargein" value="false"/>
+<!-- Day scenario -->
+ <form id="date1">
+  <field name="day1">
+   <prompt> Hi, what day of the week is today?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="day1">
+    <rule id="day1" scope="public">
+     <one-of>
+      <item>Monday</item>
+      <item>Tuesday</item>
+      <item>Wednesday</item>
+      <item>Thursday</item>
+      <item>Friday</item>
+      <item>Saturday</item>
+      <item>Sunday</item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
 
-  <record name="drinkwrong4" beep="false" maxtime="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
-   <prompt timeout="2s">OK, red. How do you like this logo's color?</prompt>
-   <catch event="connection.disconnect.hangup">
-    <submit next="./voicemail_server.asp"/>
-   </catch>
-  </record>
+  <field name="morn1">
+   <prompt>Aha,it is <value expr="day1"/>. Is it morning or afternoon?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="morn1">
+    <rule id="morn1" scope="public">
+     <one-of>
+      <item> morning<tag>morn1="morning";</tag> </item>
+      <item> afternoon <tag>morn1="afternoon";</tag> </item>
+     </one-of>
+    </rule>
+   </grammar>
+   
+   <filled>
+    <if cond="morn1=='morning'">
+     <goto next="#daywrong1"/>
+    <else />
+     <goto next="#daywrong2"/>
+    </if>
+   </filled>
+  </field>
+ </form>
+ 
+ <form id="daywrong1">
+  <field name="daywrong1">
+   <prompt>I see, in the afternoon. What time is it?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="daywrong1">
+    <rule id="daywrong1" scope="public">
+     <one-of>
+      <item>1</item>
+     </one-of>
+    </rule>
+   </grammar>
+   <nomatch>
+    <prompt> Thanks. Please rate this dialogue.</prompt>
+    <goto next="#rate2"/>
+   </nomatch>
+  </field>
+ </form>
+
+ <form id="daywrong2">
+  <field name="daywrong2">
+   <prompt>I see, in the morning. What time is it?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="daywrong2">
+    <rule id="daywrong2" scope="public">
+     <one-of>
+      <item>2</item>
+     </one-of>
+    </rule>
+   </grammar>
+   <nomatch>
+    <prompt> Thanks. Please rate this dialogue.</prompt>
+    <goto next="#rate2"/>
+   </nomatch>
+  </field>
+ </form>
+
+ <form id="rate2">
+  <field name="natural2">
+   <prompt> How natural is the system? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="natural2">
+    <rule id="natural2" scope="public">
+     <one-of>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
   
+  <field name="easy2">
+   <prompt> How easy is the system? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="easy2">
+    <rule id="easy2" scope="public">
+     <one-of>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="best1">
+   <prompt> Which one do you like best? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="best1">
+    <rule id="best1" scope="public">
+     <one-of>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>  
+
   <block>
-   <prompt>Thanks. Please rate this dialogue.</prompt>
-   <goto next="#drinkrate2" />
+   <prompt> Thanks for your help. Bye. </prompt>
   </block>
  </form>
 
-<!-- drink rating form 2 -->
- <from id="drinkrate2">
-  <property name="bargein" value="false"/>
-
-  <block>
-   <prompt> I will give you five statements. Please rate them from 1 to 5. The higher the score, the more you agree with this statement.</prompt>
-  </block>
-
-  <field name="drinklikeability2">
-    <prompt> One. The system is pleasant. </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="drinklike2">
-    <rule id="drinklike2" scope="public">
+<!-- Birthday inplicit + day inplicit-->
+<!-- Birthday scenario -->
+ <form id="birthday2">
+  <field name="birthmonth2">
+   <prompt> OK, let's start the first one. Which month were you born? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="birthmonth2">
+    <rule id="birthmonth2" scope="public">
      <one-of>
-      <item> 1 </item>
-      <item> 2 </item>
-      <item> 3 </item>
-      <item> 4 </item>
-      <item> 5 </item>
+      <item> January </item>
+      <item> February </item>
+      <item> March </item>
+      <item> April </item>
+      <item> May </item>
+      <item> June </item>
+      <item> July </item>
+      <item> August </item>
+      <item> September </item>
+      <item> October </item>
+      <item> November </item>
+      <item> December </item>
      </one-of>
     </rule>
    </grammar>
   </field>
 
-  <field name="drinkannoyance2">
-    <prompt> Two. The interaction with the system is boring.</prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="drinkannoyance2">
-    <rule id="drinkannoyance2" scope="public">
+  <field name="birthdate2">
+   <prompt>What day is your birthday in <value expr="birthmonth2" />?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="birthdate2" tag-format="semantic/1.0">
+    <rule id="birthdate2" scope="public">
      <one-of>
-      <item> 1 </item>
-      <item> 2 </item>
-      <item> 3 </item>
-      <item> 4 </item>
-      <item> 5 </item>
-     </one-of>
-    </rule>
-   </grammar>
-  </field>
-
-  <field name="drinkannoy2">
-    <prompt>Three. The system is flexible. </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="drinkannoy2">
-    <rule id="drinkannoy2" scope="public">
-     <one-of>
-      <item> 1 </item>
-      <item> 2 </item>
-      <item> 3 </item>
-      <item> 4 </item>
-      <item> 5 </item>
-     </one-of>
-    </rule>
-   </grammar>
-  </field>
-
-  <field name="drinkdemand2">
-    <prompt> Four. A high level of concentration is required when using the system. </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="drinkdemand2">
-    <rule id="drinkdemand2" scope="public">
-     <one-of>
-      <item> 1 </item>
-      <item> 2 </item>
-      <item> 3 </item>
-      <item> 4 </item>
-      <item> 5 </item>
-     </one-of>
-    </rule>
-   </grammar>
-  </field>
-
-  <field name="drinkhabitabiliy2">
-    <prompt> Five. The interaction with the system is natural. </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="drinkhabitabiliy2">
-    <rule id="drinkhabitabiliy2" scope="public">
-     <one-of>
-      <item> 1 </item>
-      <item> 2 </item>
-      <item> 3 </item>
-      <item> 4 </item>
-      <item> 5 </item>
-     </one-of>
-    </rule>
-   </grammar>
-  </field>
-
-  <block>
-   <prompt>Thanks for rating. Let's start next dialogue. </prompt>
-   <goto next="#date2" />
-  </block>
- </form>
-
-<!-- Date scenario 1 -->
- <form id="date">
-  <field name="dayField">
-   <break time="2000" />
-   <prompt bargein="false"> Hi, what day of the week is today? </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="day">
-    <rule id="day" scope="public">
-     <one-of>
-      <item> Monday <tag> out.day="monday"; </tag> </item>
-      <item> Tuesday <tag> out.day="tuesday"; </tag> </item>
-      <item> Wednesday <tag> out.day="wednesday"; </tag> </item>
-      <item> Thursday <tag> out.day="thursday"; </tag> </item>
-      <item> Friday <tag> out.day="friday"; </tag> </item>
-      <item> Saturday <tag> out.day="saturday"; </tag> </item>
-      <item> Sunday <tag> out.day="sunday"; </tag> </item>
-     </one-of>
-    </rule>
-   </grammar>
-  </field>
-
-  <field name="mornField">
-   <break time="2000" />
-   <prompt bargein="false"> Aha, it is <value expr="dayField" />. Is it morning or afternoon?</prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="morn">
-    <rule id="morn" scope="public">
-     <one-of>
-      <item> Morning <tag> out.morn="morning"; </tag> </item>
-      <item> Afternoon<tag> out.morn="afternoon"; </tag> </item>
+      <item> first <tag>date2="first"; </tag> </item>
+      <item> second <tag>date2="second"; </tag> </item>
+      <item> third <tag>date2="third"; </tag> </item>
+      <item> fourth <tag>date2="fourth"; </tag> </item>
+      <item> fifth <tag>date2="fifth"; </tag> </item>
+      <item> sixth <tag>date2="sixth"; </tag> </item>
+      <item> seventh <tag>date2="seventh"; </tag> </item>
+      <item> eighth <tag>date2="eighth"; </tag> </item>
+      <item> ninth <tag>date2="ninth"; </tag> </item>
+      <item> tenth <tag>date2="tenth"; </tag> </item>
+      <item> eleventh <tag>date2="eleventh"; </tag> </item>
+      <item> twlefth <tag>date2="twlefth"; </tag> </item>
+      <item> thirteenth <tag>date2="thirteenth"; </tag> </item>
+      <item> fourteenth <tag>date2="fourteenth"; </tag> </item>
+      <item> fifteenth <tag>date2="fifteenth"; </tag> </item>
+      <item> sixteenth <tag>date2="sixteenth"; </tag> </item>
+      <item> seventeenth <tag>date2="seventeenth"; </tag> </item>
+      <item> eighteenth <tag>date2="eighteenth"; </tag> </item>
+      <item> ninteenth <tag>date2="ninteenth"; </tag> </item>
+      <item> twentieth <tag>date2="twentieth"; </tag> </item>
+      <item> twenty-first <tag>date2="twenty-first"; </tag> </item>
+      <item> twenty-second <tag>date2="twenty-second"; </tag> </item>
+      <item> twenty-third <tag>date2="twenty-third"; </tag> </item>
+      <item> twenty-forth <tag>date2="twenty-forth"; </tag> </item>
+      <item> twenty-fifth <tag>date2="twenty-fifth"; </tag> </item>
+      <item> twenty-sixth <tag>date2="twenty-sixth"; </tag> </item>
+      <item> twenty-seventh <tag>date2="twenty-seventh"; </tag> </item>
+      <item> twenty-eighth <tag>date2="twenty-eighth"; </tag> </item>
+      <item> twenty-ninth <tag>date2="twenty-ninth"; </tag> </item>
+      <item> thirtieth <tag>date2="thirtieth"; </tag> </item>
+      <item> thirtieth-first <tag>date2="thirtieth-first"; </tag> </item>
      </one-of>
     </rule>
    </grammar>
 
    <filled>
-    <if cond="morn=='morning'">
-     <voxeo:recordcall value="100" info="1" />
-     <goto next="#datewrong1"/>
+    <if cond="date2=='first'">
+     <goto next="#birthwrong3"/>
     <else />
-     <voxeo:recordcall value="100" info="2" />
-     <goto next="#datewrong2"/>
+     <goto next="#birthwrong4"/>
     </if>
    </filled>
   </field>
-
+ </form>
+ 
+ <form id="birthwrong3">
+  <field name="birthwrong3">
+   <prompt>When were you born on the second ?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="birthwrong3">
+    <rule id="birthwrong3" scope="public">
+     <one-of>
+      <item> 1 </item>
+     </one-of>
+    </rule>
+   </grammar>
+   <nomatch>
+    <goto next="#rate3"/>
+   </nomatch>
+  </field>
  </form>
 
- <form id="datewrong1">
-  <record name="datewrong1" beep="false" maxitme="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
-   <prompt timeout="2s" bargein="false"> I see, in the afternoon. What time is it?</prompt>
-   <catch event="connection.disconnect.hangup">
-    <submit next="./voicemail_server.asp" />
-   </catch>
-  </record>
-
-  <block>
-   <prompt>Thanks. Please rate this dialogue.</prompt>
-   <goto next="#daterate1" />
-  </block>
+ <form id="birthwrong4">
+  <field name="birthwrong4">
+   <prompt>When were you born on the first ?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="birthwrong4">
+    <rule id="birthwrong4" scope="public">
+     <one-of>
+      <item> 1 </item>
+     </one-of>
+    </rule>
+   </grammar>
+   <nomatch>
+    <goto next="#rate3"/>
+   </nomatch>
+  </field>
  </form>
 
- <form id="datewrong2">
-  <record name="datewrong2" beep="false" maxitme="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
-   <prompt timeout="2s" bargein="false"> I see, in the morning. What time is it?</prompt>
-   <catch event="connection.disconnect.hangup">
-    <submit next="./voicemail_server.asp" />
-   </catch>
-  </record>
-
+ <form id="rate3">
   <block>
-  <block>
-   <prompt>Thanks. Please rate this dialogue.</prompt>
-   <goto next="#daterate1" />
+   <prompt> Thanks for testing the first dialogue. Next, I will give you two statements. Please rate them from 1 to 5.The higher the score, the more you agree with this statement.</prompt>
   </block>
-  </block>
- </form>
-
-<!-- date rating form 1 -->
- <from id="daterate1">
-  <property name="bargein" value="false"/>
-
-  <block>
-   <prompt> Still five statements. Please rate them from 1 to 5. The higher the score, the more you agree with this statement.</prompt>
-  </block>
-
-  <field name="datelikeability1">
-    <prompt> One. The system is pleasant. </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="datelike1">
-    <rule id="datelike1" scope="public">
+  
+  <field name="natural3">
+   <prompt> How natural is the system? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="natural3">
+    <rule id="natural3" scope="public">
      <one-of>
-      <item> 1 </item>
-      <item> 2 </item>
-      <item> 3 </item>
-      <item> 4 </item>
-      <item> 5 </item>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
      </one-of>
     </rule>
    </grammar>
   </field>
 
-  <field name="dateannoyance1">
-    <prompt> Two. The interaction with the system is boring.</prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="dateannoyance1">
-    <rule id="dateannoyance1" scope="public">
+  <field name="easy3">
+   <prompt> How easy is the system? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="easy3">
+    <rule id="easy3" scope="public">
      <one-of>
-      <item> 1 </item>
-      <item> 2 </item>
-      <item> 3 </item>
-      <item> 4 </item>
-      <item> 5 </item>
-     </one-of>
-    </rule>
-   </grammar>
-  </field>
-
-  <field name="dateannoy1">
-    <prompt> Three. The system is flexible. </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="dateannoy1">
-    <rule id="dateannoy1" scope="public">
-     <one-of>
-      <item> 1 </item>
-      <item> 2 </item>
-      <item> 3 </item>
-      <item> 4 </item>
-      <item> 5 </item>
-     </one-of>
-    </rule>
-   </grammar>
-  </field>
-
-  <field name="datedemand1">
-    <prompt> Four. A high level of concentration is required when using the system. </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="datedemand1">
-    <rule id="datedemand1" scope="public">
-     <one-of>
-      <item> 1 </item>
-      <item> 2 </item>
-      <item> 3 </item>
-      <item> 4 </item>
-      <item> 5 </item>
-     </one-of>
-    </rule>
-   </grammar>
-  </field>
-
-  <field name="datehabitabiliy1">
-    <prompt> Five. The interaction with the system is natural. </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="datehabitabiliy1">
-    <rule id="datehabitabiliy1" scope="public">
-     <one-of>
-      <item> 1 </item>
-      <item> 2 </item>
-      <item> 3 </item>
-      <item> 4 </item>
-      <item> 5 </item>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
      </one-of>
     </rule>
    </grammar>
   </field>
 
   <block>
-   <prompt>Thanks for rating. Bye.</prompt>
+   <prompt>Thanks for rating. Let's start next dialogue.</prompt>
+   <goto next="#date2"/>
   </block>
  </form>
 
-<!-- Date scenario 2 -->
+<!-- Day scenario -->
  <form id="date2">
-  <field name="dayField2">
-   <break time="2000" />
-   <prompt bargein="false"> Hi, what day of the week is today? </prompt>
+  <field name="day2">
+   <prompt> Hi, what day of the week is today?</prompt>
    <grammar mode="voice" type="application/srgs+xml" root="day2">
     <rule id="day2" scope="public">
      <one-of>
-      <item> Monday <tag> out.day2="monday"; </tag> </item>
-      <item> Tuesday <tag> out.day2="tuesday"; </tag> </item>
-      <item> Wednesday <tag> out.day2="wednesday"; </tag> </item>
-      <item> Thursday <tag> out.day2="thursday"; </tag> </item>
-      <item> Friday <tag> out.day2="friday"; </tag> </item>
-      <item> Saturday <tag> out.day2="saturday"; </tag> </item>
-      <item> Sunday <tag> out.day2="sunday"; </tag> </item>
+      <item>Monday</item>
+      <item>Tuesday</item>
+      <item>Wednesday</item>
+      <item>Thursday</item>
+      <item>Friday</item>
+      <item>Saturday</item>
+      <item>Sunday</item>
      </one-of>
     </rule>
    </grammar>
   </field>
 
-  <field name="mornField2">
-   <break time="2000" />
-   <prompt bargein="false"> Is it <value expr="dayField2" /> morning or afternoon?</prompt>
+  <field name="morn2">
+   <prompt>Is it <value expr="day2"/> morning or afternoon?</prompt>
    <grammar mode="voice" type="application/srgs+xml" root="morn2">
     <rule id="morn2" scope="public">
      <one-of>
-      <item> Morning <tag> out.morn2="morning"; </tag> </item>
-      <item> Afternoon<tag> out.morn2="afternoon"; </tag> </item>
+      <item> morning<tag>morn2="morning";</tag> </item>
+      <item> afternoon <tag>morn2="afternoon";</tag> </item>
+     </one-of>
+    </rule>
+   </grammar>
+   
+   <filled>
+    <if cond="morn2=='morning'">
+     <goto next="#daywrong3"/>
+    <else />
+     <goto next="#daywrong4"/>
+    </if>
+   </filled>
+  </field>
+ </form>
+ 
+ <form id="daywrong3">
+  <field name="daywrong3">
+   <prompt>What time in the afternoon is it?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="daywrong3">
+    <rule id="daywrong3" scope="public">
+     <one-of>
+      <item>1</item>
+     </one-of>
+    </rule>
+   </grammar>
+   <nomatch>
+    <prompt> Thanks. Please rate this dialogue.</prompt>
+    <goto next="#rate4"/>
+   </nomatch>
+  </field>
+ </form>
+
+ <form id="daywrong4">
+  <field name="daywrong4">
+   <prompt>What time in the morning is it?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="daywrong4">
+    <rule id="daywrong4" scope="public">
+     <one-of>
+      <item>2</item>
+     </one-of>
+    </rule>
+   </grammar>
+   <nomatch>
+    <prompt> Thanks. Please rate this dialogue.</prompt>
+    <goto next="#rate4"/>
+   </nomatch>
+  </field>
+ </form>
+
+ <form id="rate4">
+  <field name="natural4">
+   <prompt> How natural is the system? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="natural4">
+    <rule id="natural4" scope="public">
+     <one-of>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+  
+  <field name="easy4">
+   <prompt> How easy is the system? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="easy4">
+    <rule id="easy4" scope="public">
+     <one-of>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="best2">
+   <prompt> Which one do you like best? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="best2">
+    <rule id="best2" scope="public">
+     <one-of>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>  
+ </form>
+
+<!-- Birthday explicit + day explicit-->
+<!-- Birthday scenario -->
+ <form id="birthday3">
+  <field name="birthmonth3">
+   <prompt> OK, let's start the first one. Which month were you born? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="birthmonth3">
+    <rule id="birthmonth3" scope="public">
+     <one-of>
+      <item> January </item>
+      <item> February </item>
+      <item> March </item>
+      <item> April </item>
+      <item> May </item>
+      <item> June </item>
+      <item> July </item>
+      <item> August </item>
+      <item> September </item>
+      <item> October </item>
+      <item> November </item>
+      <item> December </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="birthdate3">
+   <prompt>Aha, <value expr="birthmonth3" />. Which day is your birthday?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="birthdate3" tag-format="semantic/1.0">
+    <rule id="birthdate3" scope="public">
+     <one-of>
+      <item> first <tag>date3="first"; </tag> </item>
+      <item> second <tag>date3="second"; </tag> </item>
+      <item> third <tag>date3="third"; </tag> </item>
+      <item> fourth <tag>date3="fourth"; </tag> </item>
+      <item> fifth <tag>date3="fifth"; </tag> </item>
+      <item> sixth <tag>date3="sixth"; </tag> </item>
+      <item> seventh <tag>date3="seventh"; </tag> </item>
+      <item> eighth <tag>date3="eighth"; </tag> </item>
+      <item> ninth <tag>date3="ninth"; </tag> </item>
+      <item> tenth <tag>date3="tenth"; </tag> </item>
+      <item> eleventh <tag>date3="eleventh"; </tag> </item>
+      <item> twlefth <tag>date3="twlefth"; </tag> </item>
+      <item> thirteenth <tag>date3="thirteenth"; </tag> </item>
+      <item> fourteenth <tag>date3="fourteenth"; </tag> </item>
+      <item> fifteenth <tag>date3="fifteenth"; </tag> </item>
+      <item> sixteenth <tag>date3="sixteenth"; </tag> </item>
+      <item> seventeenth <tag>date3="seventeenth"; </tag> </item>
+      <item> eighteenth <tag>date3="eighteenth"; </tag> </item>
+      <item> ninteenth <tag>date3="ninteenth"; </tag> </item>
+      <item> twentieth <tag>date3="twentieth"; </tag> </item>
+      <item> twenty-first <tag>date3="twenty-first"; </tag> </item>
+      <item> twenty-second <tag>date3="twenty-second"; </tag> </item>
+      <item> twenty-third <tag>date3="twenty-third"; </tag> </item>
+      <item> twenty-forth <tag>date3="twenty-forth"; </tag> </item>
+      <item> twenty-fifth <tag>date3="twenty-fifth"; </tag> </item>
+      <item> twenty-sixth <tag>date3="twenty-sixth"; </tag> </item>
+      <item> twenty-seventh <tag>date3="twenty-seventh"; </tag> </item>
+      <item> twenty-eighth <tag>date3="twenty-eighth"; </tag> </item>
+      <item> twenty-ninth <tag>date3="twenty-ninth"; </tag> </item>
+      <item> thirtieth <tag>date3="thirtieth"; </tag> </item>
+      <item> thirtieth-first <tag>date3="thirtieth-first"; </tag> </item>
      </one-of>
     </rule>
    </grammar>
 
    <filled>
-    <if cond="morn2=='morning'">
-     <voxeo:recordcall value="100" info="1" />
-     <goto next="#datewrong3"/>
+    <if cond="date3=='first'">
+     <goto next="#birthwrong5"/>
     <else />
-     <voxeo:recordcall value="100" info="2" />
-     <goto next="#datewrong4"/>
+     <goto next="#birthwrong6"/>
     </if>
    </filled>
   </field>
  </form>
+ 
+ <form id="birthwrong5">
+  <field name="birthwrong5">
+   <prompt>Hmm, on the second. When were you born on that day?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="birthwrong5">
+    <rule id="birthwrong5" scope="public">
+     <one-of>
+      <item> 1 </item>
+     </one-of>
+    </rule>
+   </grammar>
+   <nomatch>
+    <goto next="#rate5"/>
+   </nomatch>
+  </field>
+ </form>
 
- <form id="datewrong3">
-  <record name="datewrong3" beep="false" maxitme="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
-   <prompt timeout="2s" bargein="false"> What time in the afternoon is it?</prompt>
-   <catch event="connection.disconnect.hangup">
-    <submit next="./voicemail_server.asp" />
-   </catch>
-  </record>
+ <form id="birthwrong6">
+  <field name="birthwrong6">
+   <prompt>Hmm, on the first. When were you born on that day ?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="birthwrong6">
+    <rule id="birthwrong6" scope="public">
+     <one-of>
+      <item> 1 </item>
+     </one-of>
+    </rule>
+   </grammar>
+   <nomatch>
+    <goto next="#rate5"/>
+   </nomatch>
+  </field>
+ </form>
+
+ <form id="rate5">
+  <block>
+   <prompt> Thanks for testing the first dialogue. Next, I will give you two statements. Please rate them from 1 to 5.The higher the score, the more you agree with this statement.</prompt>
+  </block>
+  
+  <field name="natural5">
+   <prompt> How natural is the system? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="natural5">
+    <rule id="natural5" scope="public">
+     <one-of>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="easy5">
+   <prompt> How easy is the system? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="easy5">
+    <rule id="easy5" scope="public">
+     <one-of>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
 
   <block>
-   <prompt>Thanks. Please rate this dialogue.</prompt>
-   <goto next="#daterate2" />
+   <prompt>Thanks for rating. Let's start next dialogue.</prompt>
+   <goto next="#date3"/>
   </block>
  </form>
 
- <form id="datewrong4">
-  <record name="datewrong4" beep="false" maxitme="10s" finalsilence="2000ms" dtmfitem="true" type="audio/x-wav">
-   <prompt timeout="2s" bargein="false"> What time in the morning is it?</prompt>
-   <catch event="connection.disconnect.hangup">
-    <submit next="./voicemail_server.asp" />
-   </catch>
-  </record>
+<!-- Day scenario -->
+ <form id="date3">
+  <field name="day3">
+   <prompt> Hi, what day of the week is today?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="day3">
+    <rule id="day3" scope="public">
+     <one-of>
+      <item>Monday</item>
+      <item>Tuesday</item>
+      <item>Wednesday</item>
+      <item>Thursday</item>
+      <item>Friday</item>
+      <item>Saturday</item>
+      <item>Sunday</item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="morn3">
+   <prompt>Aha,it is <value expr="day3"/>. Is it morning or afternoon?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="morn3">
+    <rule id="morn3" scope="public">
+     <one-of>
+      <item> morning<tag>morn3="morning";</tag> </item>
+      <item> afternoon <tag>morn3="afternoon";</tag> </item>
+     </one-of>
+    </rule>
+   </grammar>
+   
+   <filled>
+    <if cond="morn3=='morning'">
+     <goto next="#daywrong5"/>
+    <else />
+     <goto next="#daywrong6"/>
+    </if>
+   </filled>
+  </field>
+ </form>
+ 
+ <form id="daywrong5">
+  <field name="daywrong5">
+   <prompt>I see, in the afternoon. What time is it?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="daywrong5">
+    <rule id="daywrong5" scope="public">
+     <one-of>
+      <item>1</item>
+     </one-of>
+    </rule>
+   </grammar>
+   <nomatch>
+    <prompt> Thanks. Please rate this dialogue.</prompt>
+    <goto next="#rate6"/>
+   </nomatch>
+  </field>
+ </form>
+
+ <form id="daywrong6">
+  <field name="daywrong6">
+   <prompt>I see, in the morning. What time is it?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="daywrong6">
+    <rule id="daywrong6" scope="public">
+     <one-of>
+      <item>2</item>
+     </one-of>
+    </rule>
+   </grammar>
+   <nomatch>
+    <prompt> Thanks. Please rate this dialogue.</prompt>
+    <goto next="#rate6"/>
+   </nomatch>
+  </field>
+ </form>
+
+ <form id="rate6">
+  <field name="natural6">
+   <prompt> How natural is the system? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="natural6">
+    <rule id="natural6" scope="public">
+     <one-of>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+  
+  <field name="easy6">
+   <prompt> How easy is the system? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="easy6">
+    <rule id="easy6" scope="public">
+     <one-of>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="best3">
+   <prompt> Which one do you like best? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="best3">
+    <rule id="best3" scope="public">
+     <one-of>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>  
 
   <block>
-   <prompt>Thanks. Please rate this dialogue.</prompt>
-   <goto next="#daterate2" />
+   <prompt> Thanks for your help. Bye. </prompt>
   </block>
  </form>
 
-<!-- date scenario rating form 2 -->
- <form id="daterate2">
-  <property name="bargein" value="false"/>
+<!-- Birthday explicit + day inplicit-->
+<!-- Birthday scenario -->
+ <form id="birthday4">
+  <field name="birthmonth4">
+   <prompt> OK, let's start the first one. Which month were you born? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="birthmonth4">
+    <rule id="birthmonth4" scope="public">
+     <one-of>
+      <item> January </item>
+      <item> February </item>
+      <item> March </item>
+      <item> April </item>
+      <item> May </item>
+      <item> June </item>
+      <item> July </item>
+      <item> August </item>
+      <item> September </item>
+      <item> October </item>
+      <item> November </item>
+      <item> December </item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
 
+  <field name="birthdate4">
+   <prompt>Aha, <value expr="birthmonth4" />. Which day is your birthday?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="birthdate4" tag-format="semantic/1.0">
+    <rule id="birthdate4" scope="public">
+     <one-of>
+      <item> first <tag>date4="first"; </tag> </item>
+      <item> second <tag>date4="second"; </tag> </item>
+      <item> third <tag>date4="third"; </tag> </item>
+      <item> fourth <tag>date4="fourth"; </tag> </item>
+      <item> fifth <tag>date4="fifth"; </tag> </item>
+      <item> sixth <tag>date4="sixth"; </tag> </item>
+      <item> seventh <tag>date4="seventh"; </tag> </item>
+      <item> eighth <tag>date4="eighth"; </tag> </item>
+      <item> ninth <tag>date4="ninth"; </tag> </item>
+      <item> tenth <tag>date4="tenth"; </tag> </item>
+      <item> eleventh <tag>date4="eleventh"; </tag> </item>
+      <item> twlefth <tag>date4="twlefth"; </tag> </item>
+      <item> thirteenth <tag>date4="thirteenth"; </tag> </item>
+      <item> fourteenth <tag>date4="fourteenth"; </tag> </item>
+      <item> fifteenth <tag>date4="fifteenth"; </tag> </item>
+      <item> sixteenth <tag>date4="sixteenth"; </tag> </item>
+      <item> seventeenth <tag>date4="seventeenth"; </tag> </item>
+      <item> eighteenth <tag>date4="eighteenth"; </tag> </item>
+      <item> ninteenth <tag>date4="ninteenth"; </tag> </item>
+      <item> twentieth <tag>date4="twentieth"; </tag> </item>
+      <item> twenty-first <tag>date4="twenty-first"; </tag> </item>
+      <item> twenty-second <tag>date4="twenty-second"; </tag> </item>
+      <item> twenty-third <tag>date4="twenty-third"; </tag> </item>
+      <item> twenty-forth <tag>date4="twenty-forth"; </tag> </item>
+      <item> twenty-fifth <tag>date4="twenty-fifth"; </tag> </item>
+      <item> twenty-sixth <tag>date4="twenty-sixth"; </tag> </item>
+      <item> twenty-seventh <tag>date4="twenty-seventh"; </tag> </item>
+      <item> twenty-eighth <tag>date4="twenty-eighth"; </tag> </item>
+      <item> twenty-ninth <tag>date4="twenty-ninth"; </tag> </item>
+      <item> thirtieth <tag>date4="thirtieth"; </tag> </item>
+      <item> thirtieth-first <tag>date4="thirtieth-first"; </tag> </item>
+     </one-of>
+    </rule>
+   </grammar>
+
+   <filled>
+    <if cond="date4=='first'">
+     <goto next="#birthwrong7"/>
+    <else />
+     <goto next="#birthwrong8"/>
+    </if>
+   </filled>
+  </field>
+ </form>
+ 
+ <form id="birthwrong7">
+  <field name="birthwrong7">
+   <prompt>Hmm, on the second. When were you born on that day?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="birthwrong7">
+    <rule id="birthwrong7" scope="public">
+     <one-of>
+      <item> 1 </item>
+     </one-of>
+    </rule>
+   </grammar>
+   <nomatch>
+    <goto next="#rate7"/>
+   </nomatch>
+  </field>
+ </form>
+
+ <form id="birthwrong8">
+  <field name="birthwrong8">
+   <prompt>Hmm, on the first. When were you born on that day ?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="birthwrong8">
+    <rule id="birthwrong8" scope="public">
+     <one-of>
+      <item> 1 </item>
+     </one-of>
+    </rule>
+   </grammar>
+   <nomatch>
+    <goto next="#rate7"/>
+   </nomatch>
+  </field>
+ </form>
+
+ <form id="rate7">
   <block>
-   <prompt> Still five statements. Please rate them from 1 to 5. The higher the score, the more you agree with this statement.</prompt>
+   <prompt> Thanks for testing the first dialogue. Next, I will give you two statements. Please rate them from 1 to 5.The higher the score, the more you agree with this statement.</prompt>
   </block>
-
-  <field name="datelike2">
-    <prompt> One. The system is pleasant. </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="datelike2">
-    <rule id="datelike2" scope="public">
+  
+  <field name="natural7">
+   <prompt> How natural is the system? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="natural7">
+    <rule id="natural7" scope="public">
      <one-of>
-      <item> 1 </item>
-      <item> 2 </item>
-      <item> 3 </item>
-      <item> 4 </item>
-      <item> 5 </item>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
      </one-of>
     </rule>
    </grammar>
   </field>
 
-  <field name="dateannoyance2">
-    <prompt> Two. The interaction with the system is boring.</prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="dateannoyance2">
-    <rule id="dateannoyance2" scope="public">
+  <field name="easy7">
+   <prompt> How easy is the system? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="easy7">
+    <rule id="easy7" scope="public">
      <one-of>
-      <item> 1 </item>
-      <item> 2 </item>
-      <item> 3 </item>
-      <item> 4 </item>
-      <item> 5 </item>
-     </one-of>
-    </rule>
-   </grammar>
-  </field>
-
-  <field name="dateannoy2">
-    <prompt> Three. The system is flexible. </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="dateannoy2">
-    <rule id="dateannoy2" scope="public">
-     <one-of>
-      <item> 1 </item>
-      <item> 2 </item>
-      <item> 3 </item>
-      <item> 4 </item>
-      <item> 5 </item>
-     </one-of>
-    </rule>
-   </grammar>
-  </field>
-
-  <field name="datedemand2">
-    <prompt> Four. A high level of concentration is required when using the system. </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="datedemand2">
-    <rule id="datedemand2" scope="public">
-     <one-of>
-      <item> 1 </item>
-      <item> 2 </item>
-      <item> 3 </item>
-      <item> 4 </item>
-      <item> 5 </item>
-     </one-of>
-    </rule>
-   </grammar>
-  </field>
-
-  <field name="datehabitabiliy2">
-    <prompt> Five. The interaction with the system is natural. </prompt>
-   <grammar mode="voice" type="application/srgs+xml" root="datehabitabiliy2">
-    <rule id="datehabitabiliy2" scope="public">
-     <one-of>
-      <item> 1 </item>
-      <item> 2 </item>
-      <item> 3 </item>
-      <item> 4 </item>
-      <item> 5 </item>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
      </one-of>
     </rule>
    </grammar>
   </field>
 
   <block>
-   <prompt>Thanks for rating. Bye. </prompt>
+   <prompt>Thanks for rating. Let's start next dialogue.</prompt>
+   <goto next="#date4"/>
   </block>
  </form>
 
+<!-- Day scenario -->
+ <form id="date4">
+  <field name="day4">
+   <prompt> Hi, what day of the week is today?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="day4">
+    <rule id="day4" scope="public">
+     <one-of>
+      <item>Monday</item>
+      <item>Tuesday</item>
+      <item>Wednesday</item>
+      <item>Thursday</item>
+      <item>Friday</item>
+      <item>Saturday</item>
+      <item>Sunday</item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="morn4">
+   <prompt>Is it <value expr="day4"/> morning or afternoon?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="morn4">
+    <rule id="morn4" scope="public">
+     <one-of>
+      <item> morning<tag>morn4="morning";</tag> </item>
+      <item> afternoon <tag>morn4="afternoon";</tag> </item>
+     </one-of>
+    </rule>
+   </grammar>
+   
+   <filled>
+    <if cond="morn4=='morning'">
+     <goto next="#daywrong7"/>
+    <else />
+     <goto next="#daywrong8"/>
+    </if>
+   </filled>
+  </field>
+ </form>
+ 
+ <form id="daywrong7">
+  <field name="daywrong7">
+   <prompt>What time in the afternoon is it?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="daywrong7">
+    <rule id="daywrong7" scope="public">
+     <one-of>
+      <item>1</item>
+     </one-of>
+    </rule>
+   </grammar>
+   <nomatch>
+    <prompt> Thanks. Please rate this dialogue.</prompt>
+    <goto next="#rate8"/>
+   </nomatch>
+  </field>
+ </form>
+
+ <form id="daywrong8">
+  <field name="daywrong8">
+   <prompt>I see, in the morning. What time is it?</prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="daywrong8">
+    <rule id="daywrong8" scope="public">
+     <one-of>
+      <item>2</item>
+     </one-of>
+    </rule>
+   </grammar>
+   <nomatch>
+    <prompt> Thanks. Please rate this dialogue.</prompt>
+    <goto next="#rate8"/>
+   </nomatch>
+  </field>
+ </form>
+
+ <form id="rate8">
+  <field name="natural8">
+   <prompt> How natural is the system? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="natural8">
+    <rule id="natural8" scope="public">
+     <one-of>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+  
+  <field name="easy8">
+   <prompt> How easy is the system? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="easy8">
+    <rule id="easy8" scope="public">
+     <one-of>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>
+
+  <field name="best4">
+   <prompt> Which one do you like best? </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="best4">
+    <rule id="best4" scope="public">
+     <one-of>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
+     </one-of>
+    </rule>
+   </grammar>
+  </field>  
+
+  <block>
+   <prompt> Thanks for your help. Bye. </prompt>
+  </block>
+ </form>
 </vxml>
