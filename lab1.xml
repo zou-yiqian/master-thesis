@@ -19,7 +19,7 @@
     <break time="1s" />
     <audio src="instruction.wav"/>
     <prompt>
-      Hi, thank you for calling! All cdalls into this system are recorded just for my thesis.
+      Hi, thank you for calling! All calls into this system are recorded just for my thesis.
       Next, you will evaluate two dialogues and see how the bot responds to you.
       After that, you will be asked to rate them separately.
     </prompt>
