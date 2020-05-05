@@ -1,26 +1,44 @@
 <?xml version="1.0"?>
 <vxml version="2.0" xmlns="http://www.w3.org/2001/vxml"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.w3.org/2001/vxml
-         http://www.w3.org/TR/voicexml20/vxml.xsd">
+       xsi:schemaLocation="http://www.w3.org/2001/vxml http://www.w3.org/TR/voicexml20/vxml.xsd"
+      xmlns:voxeo="http://community.voxeo.com/xmlns/vxml">
  <var name="date1"/>
  <var name="morn1"/>
  <var name="date2"/>
  <var name="morn2"/>
+ <var name="date3"/>
+ <var name="morn3"/>
+ <var name="date4"/>
+ <var name="morn4"/>
+ <var name="id" expr="Math.ceil(Math.random()*4)"/>
 
 <!-- prompt the user what to do -->
  <form id="welcome">
   <block>
-   <break time="1s" />
-   <prompt>
-    Hi, thank you for calling! All calls into this system are recorded just for my thesis.
-    Next, you will evaluate two dialogues and see how the bot responds to you.
-    After that, you will be asked to rate them separately.
-   </prompt>
-   <goto next="#birthday1"/>
+    <break time="1s" />
+    <audio src="instruction.wav"/>
+    <prompt>
+      Hi, thank you for calling! All cdalls into this system are recorded just for my thesis.
+      Next, you will evaluate two dialogues and see how the bot responds to you.
+      After that, you will be asked to rate them separately.
+    </prompt>
+   <if cond="id==2">
+    <voxeo:recordcall value="100" info="inin"/>
+    <goto next="#birthday2"/>
+   <elseif cond="id==3"/>
+    <voxeo:recordcall value="100" info="exex"/>
+    <goto next="#birthday3"/>
+   <elseif cond="id==4"/>
+    <voxeo:recordcall value="100" info="exin"/>
+    <goto next="#birthday4"/>
+   <else/>
+    <voxeo:recordcall value="100" info="inex"/>
+    <goto next="#birthday1"/>
+   </if>
   </block>
  </form>
-
+ 
 <!-- Birthday inplicit + day explicit-->
 <!-- Birthday scenario -->
  <form id="birthday1">
@@ -275,15 +293,12 @@
   </field>
 
   <field name="best1">
-   <prompt> Which one do you like best? </prompt>
+   <prompt> Which one do you like best? First one of second one? </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="best1">
     <rule id="best1" scope="public">
      <one-of>
-      <item>1</item>
-      <item>2</item>
-      <item>3</item>
-      <item>4</item>
-      <item>5</item>
+      <item>First</item>
+      <item>Second</item>
      </one-of>
     </rule>
    </grammar>
@@ -548,15 +563,12 @@
   </field>
 
   <field name="best2">
-   <prompt> Which one do you like best? </prompt>
+   <prompt> Which one do you like best? First one or second one?</prompt>
    <grammar mode="voice" type="application/srgs+xml" root="best2">
     <rule id="best2" scope="public">
      <one-of>
-      <item>1</item>
-      <item>2</item>
-      <item>3</item>
-      <item>4</item>
-      <item>5</item>
+      <item>first</item>
+      <item>second</item>
      </one-of>
     </rule>
    </grammar>
@@ -817,15 +829,12 @@
   </field>
 
   <field name="best3">
-   <prompt> Which one do you like best? </prompt>
+   <prompt> Which one do you like best? First one or second one? </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="best3">
     <rule id="best3" scope="public">
      <one-of>
-      <item>1</item>
-      <item>2</item>
-      <item>3</item>
-      <item>4</item>
-      <item>5</item>
+      <item>first</item>
+      <item>second</item>
      </one-of>
     </rule>
    </grammar>
@@ -1090,15 +1099,12 @@
   </field>
 
   <field name="best4">
-   <prompt> Which one do you like best? </prompt>
+   <prompt> Which one do you like best? First one or second one?</prompt>
    <grammar mode="voice" type="application/srgs+xml" root="best4">
     <rule id="best4" scope="public">
      <one-of>
-      <item>1</item>
-      <item>2</item>
-      <item>3</item>
-      <item>4</item>
-      <item>5</item>
+      <item>first</item>
+      <item>second</item>
      </one-of>
     </rule>
    </grammar>
