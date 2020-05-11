@@ -219,12 +219,6 @@
      </one-of>
     </rule>
    </grammar>
-   <nomatch>
-    <goto next="#easy1"/>
-   </nomatch>
-   <noinput>
-    <goto next="#easy1"/>
-   </noinput>
   </field>
   <block>
     <goto next="#easy1"/>
@@ -257,12 +251,6 @@
      </one-of>
     </rule>
    </grammar>
-   <nomatch>
-    <goto nextitem="thank1"/>
-   </nomatch>
-   <noinput>
-    <goto nextitem="thank1"/>
-   </noinput>
   </field>
 
   <block name="thank1">
@@ -410,12 +398,6 @@
      </one-of>
     </rule>
    </grammar>
-   <nomatch>
-    <goto next="#easy2"/>
-   </nomatch>
-   <noinput>
-    <goto next="#easy2"/>
-   </noinput>
   </field>
   <block>
     <goto next="#easy2"/>
@@ -448,12 +430,6 @@
      </one-of>
     </rule>
    </grammar>
-   <nomatch>
-    <goto next="#best1"/>
-   </nomatch>
-   <noinput>
-    <goto next="#best1"/>
-   </noinput>
   </field>
   <block>
     <goto next="#best1"/>
@@ -480,12 +456,6 @@
      </one-of>
     </rule>
    </grammar>
-   <nomatch>
-    <goto nextitem="bye1"/>
-   </nomatch>
-   <noinput>
-    <goto nextitem="bye1"/>
-   </noinput>
   </field>  
 
   <block name="bye1">
@@ -675,12 +645,6 @@
      </one-of>
     </rule>
    </grammar>
-   <nomatch>
-    <goto next="#easy3"/>
-   </nomatch>
-   <noinput>
-    <goto next="#easy3"/>
-   </noinput>
   </field>
   <block>
    <goto next="#easy3"/>
@@ -713,12 +677,6 @@
      </one-of>
     </rule>
    </grammar>
-   <nomatch>
-    <goto nextitem="thank2"/>
-   </nomatch>
-   <noinput>
-    <goto nextitem="thank2"/>
-   </noinput>
   </field>
 
   <block name="thank2">
@@ -865,12 +823,6 @@
      </one-of>
     </rule>
    </grammar>
-   <nomatch>
-    <goto next="#easy4"/>
-   </nomatch>
-   <noinput>
-    <goto next="#easy4"/>
-   </noinput>
   </field>
   <block>
    <goto next="#easy4"/>
@@ -903,12 +855,6 @@
      </one-of>
     </rule>
    </grammar>
-   <nomatch>
-    <goto next="#best2"/>
-   </nomatch>
-   <noinput>
-    <goto next="#best2"/>
-   </noinput>
   </field>
   <block>
    <goto next="#best2"/>
@@ -1092,12 +1038,6 @@
      </one-of>
     </rule>
    </grammar>
-   <nomatch>
-    <goto next="#easy5"/>
-   </nomatch>
-   <noinput>
-    <goto next="#easy5"/>
-   </noinput>
   </field>
   <block>
    <goto next="#easy5"/>
@@ -1130,12 +1070,6 @@
      </one-of>
     </rule>
    </grammar>
-   <nomatch>
-    <goto nextitem="thank3"/>
-   </nomatch>
-   <noinput>
-    <goto nextitem="thank3"/>
-   </noinput>
   </field>
 
   <block name="thank3">
@@ -1320,12 +1254,6 @@
      </one-of>
     </rule>
    </grammar>
-   <nomatch>
-    <goto next="#easy6"/>
-   </nomatch>
-   <noinput>
-    <goto next="#easy6"/>
-   </noinput>
   </field>
   <block>
    <goto next="#easy6"/>
@@ -1358,12 +1286,6 @@
      </one-of>
     </rule>
    </grammar>
-   <nomatch>
-    <goto next="#best3"/>
-   </nomatch>
-   <noinput>
-    <goto next="#best3"/>
-   </noinput>
   </field>
   <block>
    <goto next="#best3"/>
@@ -1390,12 +1312,6 @@
      </one-of>
     </rule>
    </grammar>
-   <nomatch>
-    <goto nextitem="bye3"/>
-   </nomatch>
-   <noinput>
-    <goto nextitem="bye3"/>
-   </noinput>
   </field>  
 
   <block name="bye3">
@@ -1545,12 +1461,6 @@
      </one-of>
     </rule>
    </grammar>
-   <nomatch>
-    <goto next="#easy7"/>
-   </nomatch>
-   <noinput>
-    <goto next="#easy7"/>
-   </noinput>
   </field>
   <block>
    <goto next="#easy7"/>
@@ -1583,12 +1493,6 @@
      </one-of>
     </rule>
    </grammar>
-   <nomatch>
-    <goto nextitem="thank4"/>
-   </nomatch>
-   <noinput>
-    <goto nextitem="thank4"/>
-   </noinput>
   </field>
 
   <block name="thank4">
@@ -1774,12 +1678,6 @@
      </one-of>
     </rule>
    </grammar>
-   <nomatch>
-    <goto next="#easy8"/>
-   </nomatch>
-   <noinput>
-    <goto next="#easy8"/>
-   </noinput>
   </field>
   <block>
    <goto next="#easy8"/>
@@ -1812,12 +1710,6 @@
      </one-of>
     </rule>
    </grammar>
-   <nomatch>
-    <goto next="#best4"/>
-   </nomatch>
-   <noinput>
-    <goto next="#best4"/>
-   </noinput>
   </field>
   <block>
    <goto next="#best4"/>
@@ -1844,12 +1736,6 @@
      </one-of>
     </rule>
    </grammar>
-   <nomatch>
-    <goto nextitem="bye4"/>
-   </nomatch>
-   <noinput>
-    <goto nextitem="bye4"/>
-   </noinput>
   </field>
   
   <block name="bye4">   
