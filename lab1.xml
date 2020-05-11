@@ -63,13 +63,19 @@
     </rule>
    </grammar>
    <nomatch>
-    <goto nextitem="birthdate1"/>
+    <goto next="#birthdate1"/>
    </nomatch>
    <noinput>
-    <goto nextitem="birthdate1"/>
+    <goto next="#birthdate1"/>
    </noinput>
   </field>
+  <block>
+    <goto next="#birthdate1"/>
+  </block>
+ </form>
 
+ <form id="birthdate1">
+  <property name="bargein" value="false"/>
   <field name="birthdate1">
    <prompt>
      what <emphasis level="moderate"> date? </emphasis><break time="1ms"/> is it <emphasis level="moderate">in May</emphasis>
@@ -128,6 +134,9 @@
    </noinput>
 
   </field>
+  <block>
+    <goto next="#birthwrong2"/>
+  </block>
  </form>
  
  <form id="birthwrong1">
@@ -184,12 +193,6 @@
   <property name="bargein" value="false"/>
   <block>
    <audio src="audio/rateinstuction.wav"/>
-   <nomatch>
-    <goto nextitem="natural1"/>
-   </nomatch>
-   <noinput>
-    <goto nextitem="natural1"/>
-   </noinput>
   </block>
   
   <field name="natural1">
@@ -217,13 +220,19 @@
     </rule>
    </grammar>
    <nomatch>
-    <goto nextitem="easy1"/>
+    <goto next="#easy1"/>
    </nomatch>
    <noinput>
-    <goto nextitem="easy1"/>
+    <goto next="#easy1"/>
    </noinput>
   </field>
+  <block>
+    <goto next="#easy1"/>
+  </block>
+ </form>
 
+ <form id="easy1">
+  <property name="bargein" value="false"/>
   <field name="easy1">
    <audio src="audio/easy.wav"/>
    <grammar root="easy1" mode="voice">
@@ -283,16 +292,22 @@
     </rule>
    </grammar>
    <nomatch>
-    <goto nextitem="morn1"/>
+    <goto next="#morn1"/>
    </nomatch>
    <noinput>
-    <goto nextitem="morn1"/>
+    <goto next="#morn1"/>
    </noinput>
   </field>
+  <block>
+    <goto next="#morn1"/>
+  </block>
+ </form>
 
+ <form id="morn1">
+  <property name="bargein" value="false"/>
   <field name="morn1">
    <prompt>
-     Aha,it's <emphasis> Friday </emphasis>. Is it morning or afternoon
+     Aha,it's <emphasis> Monday </emphasis>. Is it morning or afternoon
    </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="morn1">
     <rule id="morn1" scope="public">
@@ -303,14 +318,16 @@
     </rule>
    </grammar>
    
-   <filled>
-    <if cond="morn1=='morning'">
-     <goto next="#daywrong1"/>
-    <else />
+   <nomatch>
      <goto next="#daywrong2"/>
-    </if>
-   </filled>
+   </nomatch>
+   <noinput>
+    <goto next="#daywrong2"/>
+   </noinput>
   </field>
+  <block>
+   <goto next="#daywrong2"/>
+  </block>
  </form>
  
  <form id="daywrong1">
@@ -367,7 +384,6 @@
   <property name="bargein" value="false"/>
   <block>
    <audio src="audio/rate2.wav"/>
-    <goto nextitem="natural2"/>
   </block>
 
   <field name="natural2">
@@ -395,14 +411,20 @@
     </rule>
    </grammar>
    <nomatch>
-    <goto nextitem="easy2"/>
+    <goto next="#easy2"/>
    </nomatch>
    <noinput>
-    <goto nextitem="easy2"/>
+    <goto next="#easy2"/>
    </noinput>
   </field>
-  
-  <field name="easy2">
+  <block>
+    <goto next="#easy2"/>
+  </block>
+ </form>
+
+ <form id="easy2">
+  <property name="bargein" value="false"/>
+  <field id="easy2">
    <audio src="audio/easy.wav"/>
    <grammar root="easy2" mode="voice">
     <rule id="easy2" scope="public">
@@ -427,13 +449,19 @@
     </rule>
    </grammar>
    <nomatch>
-    <goto nextitem="best1"/>
+    <goto next="#best1"/>
    </nomatch>
    <noinput>
-    <goto nextitem="best1"/>
+    <goto next="#best1"/>
    </noinput>
   </field>
+  <block>
+    <goto next="#best1"/>
+  </block>
+ </form>
 
+ <form id="best1">
+  <property name="bargein" value="false"/>
   <field name="best1">
    <audio src="audio/best.wav"/>
    <grammar root="best1" mode="voice">
@@ -465,6 +493,7 @@
   </block>
  </form>
 
+
 <!-- date explicit + day implicit-->
 <!-- Birthday scenario -->
  <form id="birthday2">
@@ -493,13 +522,19 @@
     </rule>
    </grammar>
    <nomatch>
-    <goto nextitem="birthdate2"/>
+    <goto next="#birthdate2"/>
    </nomatch>
    <noinput>
-    <goto nextitem="birthdate2"/>
+    <goto next="#birthdate2"/>
    </noinput>
   </field>
+  <block>
+    <goto next="#birthdate2"/>
+  </block>
+ </form>
 
+ <form id="birthdate2"> 
+  <property name="bargein" value="false"/>
   <field name="birthdate2">
    <prompt>
      Aha, <emphasis>May</emphasis>. What <emphasis>date</emphasis><break time="0.5ms"/> is it today
@@ -563,7 +598,7 @@
  <property name="bargein" value="false"/>
   <field name="birthwrong3">
    <prompt>
-     O..k?..on the <emphasis>second.</emphasis> What time is it?
+     O..k?..the <emphasis>second.</emphasis> What time is it?
    </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="birthwrong3">
     <rule id="birthwrong3" scope="public">
@@ -588,7 +623,7 @@
   <property name="bargein" value="false"/>
   <field name="birthwrong4">
    <prompt>
-     O..k?..on the <emphasis>first.</emphasis> What time is it?
+     O..k?.. the <emphasis>first.</emphasis> What time is it?
    </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="birthwrong4">
     <rule id="birthwrong4" scope="public">
@@ -641,13 +676,19 @@
     </rule>
    </grammar>
    <nomatch>
-    <goto nextitem="easy3"/>
+    <goto next="#easy3"/>
    </nomatch>
    <noinput>
-    <goto nextitem="easy3"/>
+    <goto next="#easy3"/>
    </noinput>
   </field>
+  <block>
+   <goto next="#easy3"/>
+  </block>
+ </form>
 
+ <form id="easy3">
+  <property name="bargein" value="false"/>
   <field name="easy3">
    <audio src="audio/easy.wav"/>
    <grammar mode="dtmf" root="easy3">
@@ -685,7 +726,6 @@
    <goto next="#date2"/>
   </block>
  </form>
-
 <!-- Day scenario -->
  <form id="date2">
   <property name="bargein" value="false"/>
@@ -707,16 +747,22 @@
     </rule>
    </grammar>
    <nomatch>
-    <goto nextitem="morn2"/>
+    <goto next="#morn2"/>
    </nomatch>
    <noinput>
-    <goto nextitem="morn2"/>
+    <goto next="#morn2"/>
    </noinput>
   </field>
-
+  <block>
+    <goto next="#morn2"/>
+  </block>
+ </form>
+ 
+ <form id="morn2">
+  <property name="bargein" value="false"/>
   <field name="morn2">
    <prompt>
-     Is it <emphasis>Friday</emphasis><break time="0.5ms"/> morning or afternoon
+     Is it <emphasis>Monday</emphasis><break time="0.5ms"/> morning or afternoon
    </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="morn2">
     <rule id="morn2" scope="public">
@@ -727,14 +773,16 @@
     </rule>
    </grammar>
    
-   <filled>
-    <if cond="morn2=='morning'">
-     <goto next="#daywrong3"/>
-    <else />
+   <nomatch>
      <goto next="#daywrong4"/>
-    </if>
-   </filled>
+   </nomatch>
+   <noinput>
+    <goto next="#daywrong4"/>
+   </noinput>
   </field>
+  <block>
+   <goto next="#daywrong4"/>
+  </block>
  </form>
  
  <form id="daywrong3">
@@ -818,13 +866,19 @@
     </rule>
    </grammar>
    <nomatch>
-    <goto nextitem="easy4"/>
+    <goto next="#easy4"/>
    </nomatch>
    <noinput>
-    <goto nextitem="easy4"/>
+    <goto next="#easy4"/>
    </noinput>
   </field>
-  
+  <block>
+   <goto next="#easy4"/>
+  </block>
+ </form>
+ 
+ <form id="easy4">
+  <property name="bargein" value="false"/>
   <field name="easy4">
    <audio src="audio/easy.wav"/>
    <grammar mode="dtmf" root="easy4">
@@ -850,13 +904,19 @@
     </rule>
    </grammar>
    <nomatch>
-    <goto nextitem="best2"/>
+    <goto next="#best2"/>
    </nomatch>
    <noinput>
-    <goto nextitem="best2"/>
+    <goto next="#best2"/>
    </noinput>
   </field>
-
+  <block>
+   <goto next="#best2"/>
+  </block>
+ </form>
+ 
+ <form id="best2">
+  <property name="bargein" value="false"/>
   <field name="best2">
    <audio src="audio/best.wav"/>
    <grammar mode="dtmf" root="best2">
@@ -888,6 +948,7 @@
   </block>
  </form>
 
+
 <!--  day explicit+date implicit-->
 <!-- Day scenario -->
  <form id="date3">
@@ -911,16 +972,22 @@
     </rule>
    </grammar>
    <nomatch>
-    <goto nextitem="morn3"/>
+    <goto next="#morn3"/>
    </nomatch>
    <noinput>
-    <goto nextitem="morn3"/>
+    <goto next="#morn3"/>
    </noinput>
   </field>
+  <block>
+   <goto next="#morn3"/>
+  </block>
+ </form>
 
+ <form id="morn3">
+  <property name="bargein" value="false"/>
   <field name="morn3">
    <prompt>
-     Aha,it's <emphasis> Friday </emphasis>. Is it morning or afternoon
+     Aha,it's <emphasis> Monday </emphasis>. Is it morning or afternoon
    </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="morn3">
     <rule id="morn3" scope="public">
@@ -931,14 +998,17 @@
     </rule>
    </grammar>
    
-   <filled>
-    <if cond="morn3=='morning'">
-     <goto next="#daywrong5"/>
-    <else />
-     <goto next="#daywrong6"/>
-    </if>
-   </filled>
+   <nomatch>
+    <goto next="#daywrong6"/>
+   </nomatch>
+   <noinput>
+    <goto next="#daywrong6"/>
+   </noinput>
   </field>
+  
+  <block>
+    <goto next="#daywrong6"/>
+  </block>
  </form>
  
  <form id="daywrong5">
@@ -1023,13 +1093,19 @@
     </rule>
    </grammar>
    <nomatch>
-    <goto nextitem="easy5"/>
+    <goto next="#easy5"/>
    </nomatch>
    <noinput>
-    <goto nextitem="easy5"/>
+    <goto next="#easy5"/>
    </noinput>
   </field>
-
+  <block>
+   <goto next="#easy5"/>
+  </block>
+ </form>
+ 
+ <form id="easy5">
+  <property name="bargein" value="false"/>
   <field name="easy5">
    <audio src="audio/easy.wav"/>
    <grammar mode="dtmf" root="easy5">
@@ -1092,8 +1168,19 @@
      </one-of>
     </rule>
    </grammar>
+   <nomatch>
+    <goto next="#birthdate3"/>
+   </nomatch>
+   <noinput>
+    <goto next="#birthdate3"/>
+   </noinput>
   </field>
+  <block>
+   <goto next="#birthdate3"/>
+  </block>
+ </form>
 
+ <form id="birthdate3">
   <field name="birthdate3">
    <prompt>
      what <emphasis> date? </emphasis><break time="0.5ms"/> is it <emphasis>in May</emphasis>
@@ -1234,13 +1321,19 @@
     </rule>
    </grammar>
    <nomatch>
-    <goto nextitem="easy6"/>
+    <goto next="#easy6"/>
    </nomatch>
    <noinput>
-    <goto nextitem="easy6"/>
+    <goto next="#easy6"/>
    </noinput>
   </field>
-  
+  <block>
+   <goto next="#easy6"/>
+  </block>
+ </form>
+
+ <form id="easy6">
+  <property name="bargein" value="false"/>
   <field name="easy6">
    <audio src="audio/easy.wav"/>
    <grammar mode="dtmf" root="easy6">
@@ -1266,13 +1359,19 @@
     </rule>
    </grammar>
    <nomatch>
-    <goto nextitem="best3"/>
+    <goto next="#best3"/>
    </nomatch>
    <noinput>
-    <goto nextitem="best3"/>
+    <goto next="#best3"/>
    </noinput>
   </field>
-
+  <block>
+   <goto next="#best3"/>
+  </block>
+ </form>
+ 
+ <form id="best3">
+  <property name="bargein" value="false"/>
   <field name="best3">
    <audio src="audio/best.wav"/>
    <grammar mode="dtmf" root="best3">
@@ -1286,8 +1385,8 @@
    <grammar mode="voice" root="best3">
     <rule id="best3" scope="public">
      <one-of>
-      <item>first</item>
-      <item>second</item>
+      <item>1</item>
+      <item>2</item>
      </one-of>
     </rule>
    </grammar>
@@ -1327,16 +1426,22 @@
     </rule>
    </grammar>
    <nomatch>
-    <goto nextitem="morn4"/>
+    <goto next="#morn4"/>
    </nomatch>
    <noinput>
-    <goto nextitem="morn4"/>
+    <goto next="#morn4"/>
    </noinput>
   </field>
-
+  <block>
+    <goto next="#morn4"/>
+  </block>
+ </form>
+ 
+ <form id="morn4">
+  <property name="bargein" value="false"/>
   <field name="morn4">
    <prompt>
-     Is it <emphasis>Friday</emphasis><break time="0.5ms"/> morning or afternoon
+     Is it <emphasis>Monday</emphasis><break time="0.5ms"/> morning or afternoon
    </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="morn4">
     <rule id="morn4" scope="public">
@@ -1347,14 +1452,16 @@
     </rule>
    </grammar>
    
-   <filled>
-    <if cond="morn4=='morning'">
-     <goto next="#daywrong7"/>
-    <else />
-     <goto next="#daywrong8"/>
-    </if>
-   </filled>
+   <nomatch>
+    <goto next="#daywrong8"/>
+   </nomatch>
+   <noinput>
+    <goto next="#daywrong8"/>
+   </noinput>
   </field>
+  <block>
+   <goto next="#daywrong8"/>
+  </block>
  </form>
  
  <form id="daywrong7">
@@ -1439,13 +1546,19 @@
     </rule>
    </grammar>
    <nomatch>
-    <goto nextitem="easy7"/>
+    <goto next="#easy7"/>
    </nomatch>
    <noinput>
-    <goto nextitem="easy7"/>
+    <goto next="#easy7"/>
    </noinput>
   </field>
+  <block>
+   <goto next="#easy7"/>
+  </block>
+ </form>
 
+ <form id="easy7">
+  <property name="bargein" value="false"/>
   <field name="easy7">
    <audio src="audio/easy.wav"/>
    <grammar mode="dtmf" root="easy7">
@@ -1510,13 +1623,19 @@
     </rule>
    </grammar>
    <nomatch>
-    <goto nextitem="birthdate4"/>
+    <goto next="#birthdate4"/>
    </nomatch>
    <noinput>
-    <goto nextitem="birthdate4"/>
+    <goto next="#birthdate4"/>
    </noinput>
   </field>
+  <block>
+    <goto next="#birthdate4"/>
+  </block>
+ </form>
 
+  <form id="birthdate4">
+  <property name="bargein" value="false"/>
   <field name="birthdate4">
    <prompt bargein="false">
      Aha, <emphasis>May</emphasis>. What <emphasis>date</emphasis><break time="0.5ms"/> is it today
@@ -1579,7 +1698,7 @@
  <form id="birthwrong7">
   <field name="birthwrong7">
    <prompt bargein="false">
-     O..k?..on the <emphasis>second.</emphasis> What time is it?
+     O..k?..the <emphasis>second.</emphasis> What time is it?
    </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="birthwrong7">
     <rule id="birthwrong7" scope="public">
@@ -1603,7 +1722,7 @@
  <form id="birthwrong8">
   <field name="birthwrong8">
    <prompt>
-     O..k?..on the <emphasis>first.</emphasis> What time is it?
+     O..k?..the <emphasis>first.</emphasis> What time is it?
    </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="birthwrong8">
     <rule id="birthwrong8" scope="public">
@@ -1656,17 +1775,23 @@
     </rule>
    </grammar>
    <nomatch>
-    <goto nextitem="easy8"/>
+    <goto next="#easy8"/>
    </nomatch>
    <noinput>
-    <goto nextitem="easy8"/>
+    <goto next="#easy8"/>
    </noinput>
   </field>
-  
+  <block>
+   <goto next="#easy8"/>
+  </block>
+ </form>
+
+ <form id="easy8">
+  <property name="bargein" value="false"/>
   <field name="easy8">
    <audio src="audio/easy.wav"/>
    <grammar mode="dtmf" root="easy8">
-    <rule id="natural8" scope="public">
+    <rule id="easy8" scope="public">
      <one-of>
       <item>1<tag>?easy8='one';digit='1'</tag></item>
       <item>2<tag>?easy8='two';digit='2'</tag></item>
@@ -1677,7 +1802,7 @@
     </rule>
    </grammar>
    <grammar mode="voice" root="easy8">
-    <rule id="natural8" scope="public">
+    <rule id="easy8" scope="public">
      <one-of>
       <item>1</item>
       <item>2</item>
@@ -1688,29 +1813,34 @@
     </rule>
    </grammar>
    <nomatch>
-    <goto nextitem="best4"/>
+    <goto next="#best4"/>
    </nomatch>
    <noinput>
-    <goto nextitem="best4"/>
+    <goto next="#best4"/>
    </noinput>
   </field>
+  <block>
+   <goto next="#best4"/>
+  </block>
+ </form>
 
+ <form id="best4">
+  <property name="bargein" value="false"/>
   <field name="best4">
    <audio src="audio/best.wav"/>
    <grammar mode="dtmf" root="best4">
-    <rule id="natural7" scope="public">
+    <rule id="best4" scope="public">
      <one-of>
       <item>1<tag>?best4='one';digit='1'</tag></item>
       <item>2<tag>?best4='two';digit='2'</tag></item>
      </one-of>
     </rule>
    </grammar>
-   <audio src="audio/best.wav"/>
    <grammar mode="voice" root="best4">
-    <rule id="natural7" scope="public">
+    <rule id="best4" scope="public">
      <one-of>
-      <item>first</item>
-      <item>second</item>
+      <item>1</item>
+      <item>2</item>
      </one-of>
     </rule>
    </grammar>
