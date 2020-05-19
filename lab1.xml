@@ -19,6 +19,96 @@
   <block>
     <break time="1s" />
     <audio src="audio/instruction.wav"/>
+    <goto next="#basic"/>
+   </block>
+  </form>
+
+  <form id="basic">
+  <property name="bargein" value="false"/>
+   <block>
+    <break time="0.5s"/>
+    <prompt>
+      Hi, I am the <emphasis>robot</emphasis>. 
+      I will give you an <emphasis>example</emphasis>,<break time="1ms"/> so that you will <emphasis>learn</emphasis> <break time="0.5ms"/>what will <emphasis>happen</emphasis><break time="0.5ms"/> in the true <emphasis>task</emphasis>. 
+     Now, let's <emphasis>have a try.</emphasis>
+    </prompt>
+  </block>
+  <field name="gender">
+    <prompt>
+      What's your gender. Male ?<break time="0.5ms"/> or female
+    </prompt>
+    <grammar mode="voice" type="application/srgs+xml" root="gender">
+     <rule id="gender" scope="public">
+      <one-of>
+        <item>male</item>
+        <item>female</item>
+      </one-of>
+     </rule>
+    </grammar>
+    <nomatch>
+      <goto next="#age"/>
+    </nomatch>
+    <noinput>
+       <goto next="#age"/>
+    </noinput>
+   </field>
+   <block>
+    <goto next="#age"/>
+   </block>
+ </form>
+
+ <form id="age">
+  <property name="bargein" value="false"/>
+  <field name="age">
+   <prompt>
+     OK, How old are you
+   </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="age">
+    <rule id="age" scope="public">
+     <one-of>
+      <item>18</item>
+      <item>19</item>
+      <item>20</item>
+      <item>21</item>
+      <item>22</item>
+      <item>23</item>
+     </one-of>
+    </rule>
+   </grammar>
+   <nomatch>
+     <goto next="#degree"/>
+   </nomatch>
+   <noinput>
+     <goto next="#degree"/>
+   </noinput>
+  </field>
+   <block>
+    <goto next="#degree"/>
+   </block>
+ </form>
+
+ <form id="degree">
+  <property name="bargein" value="false"/>
+  <field name="degree">
+   <prompt>
+    OK, are you a Bachelor degree or above
+   </prompt>
+   <grammar mode="voice" type="application/srgs+xml" root="degree">
+    <rule id="degree" scope="public">
+     <one-of>
+      <item>yes</item>
+      <item>no</item>
+     </one-of>
+    </rule>
+   </grammar>
+  <nomatch>
+   <goto nextitem="choose"/>
+  </nomatch>
+  <noinput>
+    <goto nextitem="choose"/>
+   </noinput>
+  </field>
+  <block name="choose">
    <if cond="id==2">
     <voxeo:recordcall value="100" info="inin"/>
     <goto next="#birthday2"/>
@@ -34,14 +124,15 @@
    </if>
   </block>
  </form>
- 
+
 <!-- date implicit + day explicit-->
 <!-- date scenario -->
  <form id="birthday1">
   <property name="bargein" value="false"/>
   <field name="birthmonth1">
    <prompt>
-      Now, let's start the <emphasis level="moderate"> first </emphasis> dialogue.
+      Thanks. This is what the dialogue looks like.
+      Now, let's start the <emphasis level="moderate"> first </emphasis>  formal dialogue.
      What <emphasis level="moderate"> months? </emphasis><break time="1ms"/> is it <emphasis>today</emphasis>
  </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="birthmonth1">
@@ -295,7 +386,7 @@
   <property name="bargein" value="false"/>
   <field name="morn1">
    <prompt>
-     Aha,it's <emphasis> Monday </emphasis>. Is it morning or afternoon
+     Aha,it's <emphasis> Tuesday </emphasis>. Is it morning or afternoon
    </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="morn1">
     <rule id="morn1" scope="public">
@@ -470,6 +561,7 @@
   <property name="bargein" value="false"/>
   <field name="birthmonth2">
    <prompt>
+     Thanks. This is what the dialogue looks like.
      Now, let's start the <emphasis> first </emphasis> dialogue.
      What <emphasis> months? </emphasis><break time="0.5ms"/> is it <emphasis>today</emphasis>
    </prompt>
@@ -720,7 +812,7 @@
   <property name="bargein" value="false"/>
   <field name="morn2">
    <prompt>
-     Is it <emphasis>Monday</emphasis><break time="0.5ms"/> morning or afternoon
+     Is it <emphasis>Tuesday</emphasis><break time="0.5ms"/> morning or afternoon
    </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="morn2">
     <rule id="morn2" scope="public">
@@ -901,6 +993,7 @@
   <property name="bargein" value="false"/>
   <field name="day3">
    <prompt>
+     Thanks. This is what the dialogue looks like.
      Now, let's start the <emphasis> first </emphasis> dialogue. 
      what <emphasis> day </emphasis> of the <emphasis>weeek</emphasis> <break time="0.5ms"/> is it <emphasis>today</emphasis>
    </prompt>
@@ -933,7 +1026,7 @@
   <property name="bargein" value="false"/>
   <field name="morn3">
    <prompt>
-     Aha,it's <emphasis> Monday </emphasis>. Is it morning or afternoon
+     Aha,it's <emphasis> Tuesday </emphasis>. Is it morning or afternoon
    </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="morn3">
     <rule id="morn3" scope="public">
@@ -1325,6 +1418,7 @@
   <property name="bargein" value="false"/>
   <field name="day4">
    <prompt>
+     Thanks. This is what the dialogue looks like.
      Now, let's start the <emphasis level="moderate"> first </emphasis> dialogue.
      what <emphasis> day </emphasis> of the <emphasis>weeek</emphasis> <break time="0.5ms"/> is it <emphasis>today</emphasis>
    </prompt>
@@ -1357,7 +1451,7 @@
   <property name="bargein" value="false"/>
   <field name="morn4">
    <prompt>
-     Is it <emphasis>Monday</emphasis><break time="0.5ms"/> morning or afternoon
+     Is it <emphasis>Wednesday</emphasis><break time="0.5ms"/> morning or afternoon
    </prompt>
    <grammar mode="voice" type="application/srgs+xml" root="morn4">
     <rule id="morn4" scope="public">
