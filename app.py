@@ -7,3 +7,7 @@ def lab1():
     response = make_response(vxml)
     response.headers["Content-Type"] = "application/xml"
     return response
+
+@app.route('/audio/<path:path>')
+def send_grammar(path):
+    return send_from_directroy('audio', path)
